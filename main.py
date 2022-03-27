@@ -15,12 +15,18 @@ class Global_MainWindow(Ui_MainWindow):
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
         self.action_author.triggered.connect(self.show_author)
+        self.action_logs.triggered.connect(self.show_changelogs)
 
 
     def show_author(self):
         from help.author import author
         self.about_author = author.Ui_Author_MainWindow()
         self.about_author.show()
+
+    def show_changelogs(self):
+        from help.changelogs import  changelogs
+        self.about_changelogs = changelogs.Ui_Changelogs_MainWindow()
+        self.about_changelogs.show()
 
 if __name__ == "__main__":
     import sys
