@@ -2,6 +2,7 @@
 #   The author_template.py in FeatureAnalyzer
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 14:08 on 2022/3/27
+from help.changelogs.changelogs_template import Template as ct
 
 class Template:
     tmp = \
@@ -32,7 +33,7 @@ class Template:
         self.res = ""
 
     def get(self):
-        self.res = Template.tmp % dict(num = 0.01, date = "2022.03.27")
+        self.res = Template.tmp % dict(num = ct.latest_version, date = ct.latest_date)
         # print(self.res)
         return self.res
 

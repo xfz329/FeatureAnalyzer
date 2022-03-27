@@ -34,6 +34,10 @@ class Template:
         <p class= normal>&emsp;&emsp;%(feature)s</p>
         """
 
+    latest_version = "0.01"
+
+    latest_date = "2022.03.27"
+
     def __init__(self):
         self.res = ""
 
