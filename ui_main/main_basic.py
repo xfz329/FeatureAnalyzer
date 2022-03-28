@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui_main file 'main_basic.ui_main'
+# Form implementation generated from reading ui file 'main_basic.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -34,6 +34,8 @@ class Ui_MainWindow(object):
         self.menu_3.setObjectName("menu_3")
         self.menu_4 = QtWidgets.QMenu(self.menubar)
         self.menu_4.setObjectName("menu_4")
+        self.menu_5 = QtWidgets.QMenu(self.menubar)
+        self.menu_5.setObjectName("menu_5")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -46,13 +48,23 @@ class Ui_MainWindow(object):
         self.action_author.setObjectName("action_author")
         self.action_logs = QtWidgets.QAction(MainWindow)
         self.action_logs.setObjectName("action_logs")
+        self.action_tileSubWin = QtWidgets.QAction(MainWindow)
+        self.action_tileSubWin.setObjectName("action_tileSubWin")
+        self.action_cascadeSubWin = QtWidgets.QAction(MainWindow)
+        self.action_cascadeSubWin.setObjectName("action_cascadeSubWin")
+        self.action_draw = QtWidgets.QAction(MainWindow)
+        self.action_draw.setObjectName("action_draw")
         self.menu.addAction(self.action_open)
+        self.menu_2.addAction(self.action_draw)
         self.menu_3.addAction(self.action_new)
+        self.menu_3.addAction(self.action_tileSubWin)
+        self.menu_3.addAction(self.action_cascadeSubWin)
         self.menu_4.addAction(self.action_author)
         self.menu_4.addAction(self.action_logs)
         self.menubar.addAction(self.menu.menuAction())
-        self.menubar.addAction(self.menu_2.menuAction())
         self.menubar.addAction(self.menu_3.menuAction())
+        self.menubar.addAction(self.menu_2.menuAction())
+        self.menubar.addAction(self.menu_5.menuAction())
         self.menubar.addAction(self.menu_4.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -62,9 +74,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.menu.setTitle(_translate("MainWindow", "文件"))
-        self.menu_2.setTitle(_translate("MainWindow", "视图"))
+        self.menu_2.setTitle(_translate("MainWindow", "绘图"))
         self.menu_3.setTitle(_translate("MainWindow", "窗口"))
         self.menu_4.setTitle(_translate("MainWindow", "关于"))
+        self.menu_5.setTitle(_translate("MainWindow", "分析"))
         self.action_open.setText(_translate("MainWindow", "打开"))
         self.action_open.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.action_new.setText(_translate("MainWindow", "新建"))
@@ -73,3 +86,7 @@ class Ui_MainWindow(object):
         self.action_author.setShortcut(_translate("MainWindow", "F1"))
         self.action_logs.setText(_translate("MainWindow", "更新日志"))
         self.action_logs.setShortcut(_translate("MainWindow", "Ctrl+L"))
+        self.action_tileSubWin.setText(_translate("MainWindow", "平铺显示"))
+        self.action_cascadeSubWin.setText(_translate("MainWindow", "级联显示"))
+        self.action_draw.setText(_translate("MainWindow", "绘制"))
+        self.action_draw.setShortcut(_translate("MainWindow", "Ctrl+D"))

@@ -34,18 +34,24 @@ class Template:
         <p class= normal>&emsp;&emsp;%(feature)s</p>
         """
 
-    latest_version = "0.01"
+    latest_version = "0.02"
 
-    latest_date = "2022.03.27"
+    latest_date = "2022.03.28"
 
     def __init__(self):
         self.res = ""
 
     def get(self):
+        tab = ""
+        f = ""
+        f += Template.feature % dict(feature="增加MDI设计")
+        f +=Template.feature % dict(feature = "增加对qtpandas（1.04）的支持")
+        f += Template.feature % dict(feature="增加数据读取与数据绘制接口")
+        tab += Template.version % dict(num = 0.02, date = "2022.03.28", features = f)
+
         f = ""
         f +=Template.feature % dict(feature = "确定基本程序框架")
         f += Template.feature % dict(feature="逻辑与页面分离")
-        tab = ""
         tab += Template.version % dict(num = 0.01, date = "2022.03.27", features = f)
         self.res = Template.tmp % dict(versions = tab)
         # print(self.res)
