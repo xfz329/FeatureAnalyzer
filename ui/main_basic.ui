@@ -123,20 +123,32 @@
    <property name="text">
     <string>数据窗口</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
   </action>
   <action name="action_win_plot">
    <property name="text">
     <string>图形窗口</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
    </property>
   </action>
   <action name="action_win_log">
    <property name="text">
     <string>日志窗口</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
   </action>
   <action name="action_win_result">
    <property name="text">
     <string>输出窗口</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+4</string>
    </property>
   </action>
  </widget>

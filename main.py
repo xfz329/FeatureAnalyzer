@@ -5,10 +5,10 @@
 
 import pandas as pd
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QAction
+
 import data.Globalvar as gl
-from ui.SubWindow import SubwindowManager
 from ui.main_basic import Ui_MainWindow
+from ui.subwindow.SubWindow import SubwindowManager
 from utils.logger import Logger
 
 
@@ -23,6 +23,7 @@ class Global_MainWindow(Ui_MainWindow):
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
+        # self.mdiArea.setActivationOrder(QMdiArea.WindowOrder.ActivationHistoryOrder)
         self.swm = SubwindowManager(self.mdiArea)
         self.action_author.triggered.connect(self.show_author)
         self.action_logs.triggered.connect(self.show_changelogs)
