@@ -23,3 +23,11 @@ def get_value(name, defValue = None):
     except KeyError:
         log.error("no values matched key " + name )
         return defValue
+
+def delete_value(name):
+    log.debug("delete value " + name)
+    try:
+        del _global_dict[name]
+        log.debug(_global_dict)
+    except KeyError:
+        log.error("no values matched key " + name)

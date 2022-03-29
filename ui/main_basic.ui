@@ -129,7 +129,7 @@
   </action>
   <action name="action_win_plot">
    <property name="text">
-    <string>图形窗口</string>
+    <string>绘图窗口</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>

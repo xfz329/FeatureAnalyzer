@@ -54,53 +54,36 @@ class Global_MainWindow(Ui_MainWindow):
         text = datetime.toString("HH:mm:ss")
         self.statusbar.showMessage(text+"  "+msg, 5000)
 
-    def open(self):
-        if gl.get_value("last_operation_widget")== None:
-            self.log.warning("None widget exits. Add a new one.")
-            self.create_new_subwindow(self.action_win_data)
-        widget = gl.get_value("last_operation_widget")
-        self.log.info("last_operation_widget is "+ str(widget))
-        from PyQt5.QtWidgets import QFileDialog
-        f = QFileDialog.getOpenFileName(None,"打开","C:\\",".csv *.*")
-        file = f[0]
-        self.log.info("Open file"+file)
-        self.update_statusbar("已选择文件"+file)
-        if file.endswith(".csv"):
-            df = pd.read_csv(file)
-        elif file.endswith(".xls") or file.endswith(".xlsx"):
-            df = pd.read_excel(file)
-        widget.model().setDataFrame(df)
-
     def create_new_subwindow(self, action):
         if action.objectName() == self.action_win_data.objectName():
-            self.swm.add_data_sub_window()
+            self.swm.add_sub_window_data()
             return
         if action.objectName() == self.action_win_plot.objectName():
-            self.swm.add_plot_sub_window()
+            self.swm.add_sub_window_plot()
             return
         if action.objectName() == self.action_win_log.objectName():
-            self.swm.add_logs_sub_window()
+            self.swm.add_sub_window_logs()
             return
         if action.objectName() == self.action_win_result.objectName():
-            self.swm.add_result_sub_window()
+            self.swm.add_sub_window_result()
             return
 
+    def open(self):
+        win = self.swm.get_sub_window_data()
+        self.log.info("add data to subwindow "+ win.windowTitle())
+        from process.Open import OpenFiles as of
+        df = of().open()
+        if df is not None:
+            widget = win.widget()
+            widget.model().setDataFrame(df)
+
     def draw(self):
-        from PyQt5.QtWidgets import QMessageBox
-        widget = gl.get_value("last_operation_widget")
-        if widget is None:
-            QMessageBox.warning(None, '警告', '没有任何数据窗口处于被打开的状态', QMessageBox.Ok)
-            return
-        if widget.model().dataFrame().empty:
-            QMessageBox.warning(None, '警告', '当前数据窗口无数据可供绘制', QMessageBox.Ok)
-            return
-        index = widget.tableView.selectedIndexes()
-        if len(index) == 0:
-            QMessageBox.warning(None, '警告', '没有任何数据被选中！', QMessageBox.Ok)
-            return
-        for ix in index:
-            print(ix.row(), ix.column())
-        print(widget.tableView.selectedIndexes())
+        winD = self.swm.get_sub_window_data()
+        winP = self.swm.get_sub_window_plot()
+        self.log.info("draw plot to subwindow " + winP.windowTitle()+ " using selected data in subwindow " + winD.windowTitle())
+
+        from process.Draw import Draw
+        Draw().draw(winD,winP)
 
 
 

@@ -12,7 +12,7 @@ class Title:
 
     def get_new_title(self):
         self.count += 1
-        return self.prefix + "-" + str(self.count)
+        return self.prefix + "-" + str(self.count), self.prefix
 
     def is_winType(self,win_type):
         return self.type == win_type

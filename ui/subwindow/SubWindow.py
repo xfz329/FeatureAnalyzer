@@ -15,27 +15,32 @@ class SubwindowManager(object):
     Window_Logs          =    0x0100
     Window_Result       =    0x1000
 
+    Key_Window_Data         =   "数据窗口"
+    Key_Window_Plot         =   "绘图窗口"
+    Key_Window_Logs         =   "日志窗口"
+    Key_Window_Result       =   "输出窗口"
+
     default_width  =    800
     default_height =    600
 
     def __init__(self,area):
-        t_data = Title(SubwindowManager.Window_Data,"数据窗口")
-        t_plot = Title(SubwindowManager.Window_Plot, "图形窗口")
-        t_logs = Title(SubwindowManager.Window_Logs, "日志窗口")
-        t_result = Title(SubwindowManager.Window_Result, "输出窗口")
+        t_data = Title(SubwindowManager.Window_Data,SubwindowManager.Key_Window_Data)
+        t_plot = Title(SubwindowManager.Window_Plot, SubwindowManager.Key_Window_Plot)
+        t_logs = Title(SubwindowManager.Window_Logs, SubwindowManager.Key_Window_Logs)
+        t_result = Title(SubwindowManager.Window_Result, SubwindowManager.Key_Window_Result)
         self.titles=[t_data,t_plot,t_logs,t_result]
         self.mdi_area = area
         self.log = Logger("fa").get_log()
         self.mdi_area.subWindowActivated.connect(self.update_actived_window)
 
 
-    def add_data_sub_window(self):
+    def add_sub_window_data(self):
         from qtpandas.views.DataTableView import DataTableWidget
         from qtpandas.models.DataFrameModel import DataFrameModel
 
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Data)
-        sub.setWindowTitle(title)
+        sub.setWindowTitle(title[0])
         sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
         # 在子窗口中添加一个标签，并设置文本
         widget = DataTableWidget()
@@ -43,17 +48,16 @@ class SubwindowManager(object):
         model = DataFrameModel()
         widget.setViewModel(model)
         sub.setWidget(widget)
-        gl.set_value(title + "widget", widget)
-        gl.set_value("last_operation_widget", widget)
+        self.save_sub_window(title, sub)
         self.mdi_area.addSubWindow(sub)  # 将新建的子窗口添加到MDI区域
         sub.signal_close.connect(self.update_closed_window)
         sub.show()
 
-    def add_plot_sub_window(self):
+    def add_sub_window_plot(self):
 
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Plot)
-        sub.setWindowTitle(title)
+        sub.setWindowTitle(title[0])
         sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
         widget = QtWidgets.QWidget()
         layout = QtWidgets.QVBoxLayout(widget)
@@ -61,14 +65,15 @@ class SubwindowManager(object):
         layout.addWidget(plot)
         # sub.setLayout(layout)
         sub.setWidget(widget)
+        self.save_sub_window(title, sub)
         self.mdi_area.addSubWindow(sub)
         sub.signal_close.connect(self.update_closed_window)
         sub.show()
 
-    def add_logs_sub_window(self):
+    def add_sub_window_logs(self):
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Logs)
-        sub.setWindowTitle(title)
+        sub.setWindowTitle(title[0])
         sub.resize(SubwindowManager.default_width,SubwindowManager.default_height)
 
         centralwidget = QtWidgets.QWidget()
@@ -99,15 +104,16 @@ class SubwindowManager(object):
         formLayout_2.setWidget(0, QtWidgets.QFormLayout.SpanningRole, scrollArea)
 
         sub.setWidget(centralwidget)
+        self.save_sub_window(title, sub)
         self.mdi_area.addSubWindow(sub)
         sub.signal_close.connect(self.update_closed_window)
         sub.show()
 
 
-    def add_result_sub_window(self):
+    def add_sub_window_result(self):
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Result)
-        sub.setWindowTitle(title)
+        sub.setWindowTitle(title[0])
         sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
 
         centralwidget = QtWidgets.QWidget()
@@ -138,24 +144,60 @@ class SubwindowManager(object):
         formLayout_2.setWidget(0, QtWidgets.QFormLayout.SpanningRole, scrollArea)
 
         sub.setWidget(centralwidget)
+        self.save_sub_window(title, sub)
         self.mdi_area.addSubWindow(sub)
         sub.signal_close.connect(self.update_closed_window)
         sub.show()
 
-    def generate_win_title(self, type):
+    def save_sub_window(self,title,win):
+        gl.set_value(title[0] , win)
+        gl.set_value(title[1], win)
+
+
+    def get_sub_window_data(self):
+        if gl.get_value(SubwindowManager.Key_Window_Data)is None:
+            self.log.warning("尚无数据窗口，开始创建新的数据窗口")
+            self.add_sub_window_data()
+        return gl.get_value(SubwindowManager.Key_Window_Data)
+
+    def get_sub_window_plot(self):
+        if gl.get_value(SubwindowManager.Key_Window_Plot) is None:
+            self.log.warning("尚无绘图窗口，开始创建新的绘图窗口")
+            self.add_sub_window_plot()
+        return gl.get_value(SubwindowManager.Key_Window_Plot)
+
+    def get_sub_window_logs(self):
+        if gl.get_value(SubwindowManager.Key_Window_Logs) is None:
+            self.log.warning("尚无日志窗口，开始创建新的日志窗口")
+            self.add_sub_window_logs()
+        return gl.get_value(SubwindowManager.Key_Window_Logs)
+
+    def get_sub_window_result(self):
+        if gl.get_value(SubwindowManager.Key_Window_Result) is None:
+            self.log.warning("尚无输出窗口，开始创建新的输出窗口")
+            self.add_sub_window_result()
+        return gl.get_value(SubwindowManager.Key_Window_Result)
+
+    def generate_win_title(self, wintype):
         for t in self.titles:
-            if t.is_winType(type):
+            if t.is_winType(wintype):
                 return t.get_new_title()
         self.log.error("Unknown sub window type.")
 
     def update_actived_window(self,window):
         if window is not None :
             self.log.debug("the window "+ window.windowTitle()+" is actived")
+            winType = window.windowTitle().split("-")[0]
+            gl.set_value(winType, window)
         else:
             self.log.debug("All the sub windows are inactived")
 
     def update_closed_window(self,info):
         self.log.info("the window "+ info+" is closed")
+        winType = info.split("-")[0]
+        self.log.info(winType)
+        gl.set_value(winType, None)
+        gl.delete_value(info)
 
 
 class MySubQMdiSubWindow(QtWidgets.QMdiSubWindow):
