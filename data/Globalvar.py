@@ -11,13 +11,13 @@ def init_():
 
 def set_value(name, value):
     _global_dict[name] = value
-    log.info("set value "+ name )
-    log.info(_global_dict)
+    log.debug("set value "+ name )
+    log.debug(_global_dict)
 
 
 def get_value(name, defValue = None):
-    log.info("get value "+ name )
-    log.info(_global_dict)
+    log.debug("get value "+ name )
+    log.debug(_global_dict)
     try:
         return _global_dict[name]
     except KeyError:

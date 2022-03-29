@@ -45,7 +45,16 @@
     <property name="title">
      <string>窗口</string>
     </property>
-    <addaction name="action_new"/>
+    <widget class="QMenu" name="menu_new_win">
+     <property name="title">
+      <string>新建</string>
+     </property>
+     <addaction name="action_win_data"/>
+     <addaction name="action_win_plot"/>
+     <addaction name="action_win_log"/>
+     <addaction name="action_win_result"/>
+    </widget>
+    <addaction name="menu_new_win"/>
     <addaction name="action_tileSubWin"/>
     <addaction name="action_cascadeSubWin"/>
    </widget>
@@ -74,14 +83,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
-   </property>
-  </action>
-  <action name="action_new">
-   <property name="text">
-    <string>新建</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="action_author">
@@ -116,6 +117,26 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_win_data">
+   <property name="text">
+    <string>数据窗口</string>
+   </property>
+  </action>
+  <action name="action_win_plot">
+   <property name="text">
+    <string>图形窗口</string>
+   </property>
+  </action>
+  <action name="action_win_log">
+   <property name="text">
+    <string>日志窗口</string>
+   </property>
+  </action>
+  <action name="action_win_result">
+   <property name="text">
+    <string>输出窗口</string>
    </property>
   </action>
  </widget>

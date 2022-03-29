@@ -3,12 +3,14 @@
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 19:40 on 2022/3/26
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import *
-from ui_main.main_basic import Ui_MainWindow
-import data.Globalvar as gl
-from utils.logger import Logger
 import pandas as pd
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QAction
+import data.Globalvar as gl
+from ui.SubWindow import SubwindowManager
+from ui.main_basic import Ui_MainWindow
+from utils.logger import Logger
+
 
 class Global_MainWindow(Ui_MainWindow):
     def __init__(self):
@@ -17,17 +19,19 @@ class Global_MainWindow(Ui_MainWindow):
         self.current_file = None
         self.count = 0
         self.log = Logger('fa').get_log()
+        self.swm = None
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
+        self.swm = SubwindowManager(self.mdiArea)
         self.action_author.triggered.connect(self.show_author)
         self.action_logs.triggered.connect(self.show_changelogs)
         self.action_open.triggered.connect(self.open)
-        self.action_new.triggered.connect(self.new)
+        self.menu_new_win.triggered.connect(self.create_new_subwindow)
         self.action_cascadeSubWin.triggered.connect(self.mdiArea.cascadeSubWindows)
         self.action_tileSubWin.triggered.connect(self.mdiArea.tileSubWindows)
         self.action_draw.triggered.connect(self.draw)
-        self.new()
+        self.create_new_subwindow(self.action_win_data)
         self.update_statusbar("系统初始化完毕")
 
 
@@ -52,7 +56,7 @@ class Global_MainWindow(Ui_MainWindow):
     def open(self):
         if gl.get_value("last_operation_widget")== None:
             self.log.warning("None widget exits. Add a new one.")
-            self.new()
+            self.create_new_subwindow(self.action_win_data)
         widget = gl.get_value("last_operation_widget")
         self.log.info("last_operation_widget is "+ str(widget))
         from PyQt5.QtWidgets import QFileDialog
@@ -66,28 +70,19 @@ class Global_MainWindow(Ui_MainWindow):
             df = pd.read_excel(file)
         widget.model().setDataFrame(df)
 
-    def new(self):
-        from qtpandas.views.DataTableView import DataTableWidget
-        from qtpandas.models.DataFrameModel import DataFrameModel
-        sub = QMdiSubWindow()  # 创建子窗口对象
-        self.count = self.count + 1  # 记录子窗口个数
-        # 设置子窗口标题
-        title = "数据窗口" + str(self.count)
-        sub.setWindowTitle(title)
-        # 在子窗口中添加一个标签，并设置文本
-        widget = DataTableWidget()
-        widget.tableView.setSortingEnabled(False)
-        model = DataFrameModel()
-        widget.setViewModel(model)
-        sub.setWidget(widget)
-        gl.set_value(title+"widget",widget)
-        gl.set_value("last_operation_widget",widget)
-        self.mdiArea.addSubWindow(sub)  # 将新建的子窗口添加到MDI区域
-        if self.count == 1:
-            sub.showMaximized()
-        else:
-            sub.show()  # 显示子窗口
-        print(self.mdiArea.subWindowList())
+    def create_new_subwindow(self, action):
+        if action.objectName() == self.action_win_data.objectName():
+            self.swm.add_data_sub_window()
+            return
+        if action.objectName() == self.action_win_plot.objectName():
+            self.swm.add_plot_sub_window()
+            return
+        if action.objectName() == self.action_win_log.objectName():
+            self.swm.add_logs_sub_window()
+            return
+        if action.objectName() == self.action_win_result.objectName():
+            self.swm.add_result_sub_window()
+            return
 
     def draw(self):
         from PyQt5.QtWidgets import QMessageBox
