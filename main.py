@@ -69,7 +69,7 @@ class Global_MainWindow(Ui_MainWindow):
             return
 
     def open(self):
-        win = self.swm.get_sub_window_data()
+        win = self.swm.get_sub_window(SubwindowManager.Key_Window_Data)
         self.log.info("add data to subwindow "+ win.windowTitle())
         from process.Open import OpenFiles as of
         df = of().open()
@@ -78,8 +78,8 @@ class Global_MainWindow(Ui_MainWindow):
             widget.model().setDataFrame(df)
 
     def draw(self):
-        winD = self.swm.get_sub_window_data()
-        winP = self.swm.get_sub_window_plot()
+        winD = self.swm.get_sub_window(SubwindowManager.Key_Window_Data)
+        winP = self.swm.get_sub_window(SubwindowManager.Key_Window_Plot)
         self.log.info("draw plot to subwindow " + winP.windowTitle()+ " using selected data in subwindow " + winD.windowTitle())
 
         from process.Draw import Draw

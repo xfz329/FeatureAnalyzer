@@ -129,7 +129,7 @@ class SubwindowManager(object):
         sizePolicy.setHeightForWidth(label.sizePolicy().hasHeightForWidth())
         label.setSizePolicy(sizePolicy)
 
-        from help.changelogs.changelogs_template import Template
+        from help.author.author_template import Template
         label.setText(Template().get())
 
         formLayout = QtWidgets.QFormLayout(scrollAreaWidgetContents)
@@ -148,30 +148,21 @@ class SubwindowManager(object):
         gl.set_value(title[0] , win)
         gl.set_value(title[1], win)
 
-
-    def get_sub_window_data(self):
-        if gl.get_value(SubwindowManager.Key_Window_Data)is None:
-            self.log.warning("尚无数据窗口，开始创建新的数据窗口")
-            self.add_sub_window_data()
-        return gl.get_value(SubwindowManager.Key_Window_Data)
-
-    def get_sub_window_plot(self):
-        if gl.get_value(SubwindowManager.Key_Window_Plot) is None:
-            self.log.warning("尚无绘图窗口，开始创建新的绘图窗口")
-            self.add_sub_window_plot()
-        return gl.get_value(SubwindowManager.Key_Window_Plot)
-
-    def get_sub_window_logs(self):
-        if gl.get_value(SubwindowManager.Key_Window_Logs) is None:
-            self.log.warning("尚无日志窗口，开始创建新的日志窗口")
-            self.add_sub_window_logs()
-        return gl.get_value(SubwindowManager.Key_Window_Logs)
-
-    def get_sub_window_result(self):
-        if gl.get_value(SubwindowManager.Key_Window_Result) is None:
-            self.log.warning("尚无输出窗口，开始创建新的输出窗口")
-            self.add_sub_window_result()
-        return gl.get_value(SubwindowManager.Key_Window_Result)
+    def get_sub_window(self,win_type):
+        if gl.get_value(win_type) is None:
+            self.log.warning("There's none of "+win_type+" exits. Creating a new one.")
+            if win_type == SubwindowManager.Key_Window_Data:
+                self.add_sub_window_data()
+            elif win_type == SubwindowManager.Key_Window_Plot:
+                self.add_sub_window_plot()
+            elif win_type == SubwindowManager.Key_Window_Logs:
+                self.add_sub_window_logs()
+            elif win_type == SubwindowManager.Key_Window_Result:
+                self.add_sub_window_result()
+            else:
+                self.log.error("Get a request to create a unknown type("+win_type+") sub window")
+                return
+        return gl.get_value(win_type)
 
     def generate_win_title(self, wintype):
         for t in self.titles:
