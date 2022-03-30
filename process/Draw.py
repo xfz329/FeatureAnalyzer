@@ -38,18 +38,12 @@ class Draw:
         df = data.widget().model().dataFrame()
 
         if len(row_dict) == 2 :
-            # self.x = df.iloc[:,[rows[0]]]
-            # self.y = df.iloc[:, [rows[1]]
-            # print(self.x,self.y)
+            self.x = df.iloc[:, rows[0]].tolist()
+            self.y = df.iloc[:, rows[1]].tolist()
             return True
         if len(row_dict) == 1:
-            # self.x = df.iloc[:, [rows[0]]]
-            line = rows[0]
-            self.y = df.iloc[:, line].tolist()
+            self.y = df.iloc[:, rows[0]].tolist()
             self.x = list(range(len(self.y)))
-
-            print(type(self.y))
-            print(type(self.x))
             return True
         else:
             return False
@@ -67,9 +61,7 @@ class Draw:
         graph0.setData(self.x, self.y)
 
         customPlot.rescaleAxes()
-        customPlot.setInteraction(QCP.iRangeDrag)
-        customPlot.setInteraction(QCP.iRangeZoom)
-        customPlot.setInteraction(QCP.iSelectPlottables)
+        customPlot.setInteraction(QCP.iRangeDrag | QCP.iRangeZoom | QCP.iSelectAxes | QCP.iSelectLegend | QCP.iSelectPlottables)
         customPlot.replot()
 
     def draw(self, data, plot):
@@ -78,3 +70,7 @@ class Draw:
         if self.prepare_data(data):
             self.start_plot(plot)
 
+    def set(self):
+        # control the way to plot a figure
+        # TODO
+        pass
