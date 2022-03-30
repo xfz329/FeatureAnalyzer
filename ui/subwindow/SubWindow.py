@@ -85,6 +85,7 @@ class SubwindowManager(object):
         scrollArea.setWidget(scrollAreaWidgetContents)
 
         label = QtWidgets.QLabel(scrollAreaWidgetContents)
+        label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -123,6 +124,7 @@ class SubwindowManager(object):
         scrollArea.setWidget(scrollAreaWidgetContents)
 
         label = QtWidgets.QLabel(scrollAreaWidgetContents)
+        label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

@@ -18,6 +18,7 @@ class Ui_Changelogs_MainWindow(Ui_MainWindow):
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.label.setText(self.getlogs())
+        self.label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
     def getlogs(self):
         t = Template()

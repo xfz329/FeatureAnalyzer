@@ -17,6 +17,7 @@ class Ui_Author_MainWindow(Ui_MainWindow):
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
         self.label.setText(self.getAuthor())
+        self.label.setTextInteractionFlags(QtCore.Qt.TextInteractionFlag.TextSelectableByMouse)
 
     def getAuthor(self):
         t = Template()
