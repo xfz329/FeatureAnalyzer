@@ -41,8 +41,7 @@ class SubwindowManager(object):
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Data)
         sub.setWindowTitle(title[0])
-        sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
-        # 在子窗口中添加一个标签，并设置文本
+
         widget = DataTableWidget()
         widget.tableView.setSortingEnabled(False)
         model = DataFrameModel()
@@ -54,11 +53,12 @@ class SubwindowManager(object):
         sub.show()
 
     def add_sub_window_plot(self):
-
         sub = MySubQMdiSubWindow()
+        # 与其他三个子类不同，必须设置成False, 否则关闭绘图窗口会直接导致程序退出
+        # 未知bug？
+        sub.setAttribute(QtCore.Qt.WA_DeleteOnClose, False)
         title = self.generate_win_title(SubwindowManager.Window_Plot)
         sub.setWindowTitle(title[0])
-        sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
         widget = QtWidgets.QWidget()
         plot = QCustomPlot(widget)
         sub.setWidget(plot)
@@ -71,10 +71,8 @@ class SubwindowManager(object):
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Logs)
         sub.setWindowTitle(title[0])
-        sub.resize(SubwindowManager.default_width,SubwindowManager.default_height)
 
         centralwidget = QtWidgets.QWidget()
-
         scrollArea = QtWidgets.QScrollArea(centralwidget)
         scrollArea.setWidgetResizable(True)
         scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
@@ -111,10 +109,8 @@ class SubwindowManager(object):
         sub = MySubQMdiSubWindow()
         title = self.generate_win_title(SubwindowManager.Window_Result)
         sub.setWindowTitle(title[0])
-        sub.resize(SubwindowManager.default_width, SubwindowManager.default_height)
 
         centralwidget = QtWidgets.QWidget()
-
         scrollArea = QtWidgets.QScrollArea(centralwidget)
         scrollArea.setWidgetResizable(True)
         scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
@@ -182,15 +178,21 @@ class SubwindowManager(object):
         self.log.error("Unknown sub window type.")
 
     def update_actived_window(self,window):
-        if window is not None :
-            self.log.debug("the window "+ window.windowTitle()+" is actived")
-            winType = window.windowTitle().split("-")[0]
-            gl.set_value(winType, window)
+        aw = self.mdi_area.activeSubWindow()
+        if aw is not None :
+            self.log.debug("the window "+ aw.windowTitle()+" is actived")
+            winType = aw.windowTitle().split("-")[0]
+            gl.set_value(winType, aw)
         else:
-            self.log.debug("All the sub windows are inactived")
+            self.log.debug("None sub window is inactived")
 
     def update_closed_window(self,info):
         self.log.info("the window "+ info+" is closed")
+        win = gl.get_value(info,None)
+        if win is not None:
+            # 使被点击关闭的窗口不再获得焦点
+            win.setEnabled(False)
+            # self.log.info(self.mdi_area.subWindowList())
         winType = info.split("-")[0]
         self.log.info(winType)
         gl.set_value(winType, None)
@@ -201,6 +203,10 @@ class MySubQMdiSubWindow(QtWidgets.QMdiSubWindow):
     signal_close = QtCore.pyqtSignal(str)
     def __init__(self):
         super(QtWidgets.QMdiSubWindow, self).__init__()
+        self.log = Logger('fa').get_log()
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+        self.resize(SubwindowManager.default_width, SubwindowManager.default_height)
 
     def closeEvent(self, event):
+        self.log.info("about to close "+self.windowTitle())
         self.signal_close.emit(self.windowTitle())

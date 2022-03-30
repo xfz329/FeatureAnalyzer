@@ -11,7 +11,7 @@ def init_():
 
 def set_value(name, value):
     _global_dict[name] = value
-    log.debug("set value "+ name )
+    log.debug("set value "+ name + " to value " +str(value))
     log.debug(_global_dict)
 
 
