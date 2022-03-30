@@ -65,6 +65,8 @@ class SubwindowManager(object):
         self.save_sub_window(title, sub)
         self.mdi_area.addSubWindow(sub)
         sub.signal_close.connect(self.update_closed_window)
+        plot.mousePress.connect(sub.mousePress)
+        plot.mouseWheel.connect(sub.mouseWheel)
         sub.show()
 
     def add_sub_window_logs(self):
@@ -210,3 +212,27 @@ class MySubQMdiSubWindow(QtWidgets.QMdiSubWindow):
     def closeEvent(self, event):
         self.log.info("about to close "+self.windowTitle())
         self.signal_close.emit(self.windowTitle())
+
+    def mousePress(self):
+        plot = self.widget()
+        if type(plot).__name__ != 'QCustomPlot':
+            print("It's not a drawing sub win" )
+            return
+        if plot.xAxis.selectedParts() == QCPAxis.SelectablePart.spAxis:
+            plot.axisRect().setRangeDrag(plot.xAxis.orientation())
+        elif plot.yAxis.selectedParts() == QCPAxis.SelectablePart.spAxis:
+            plot.axisRect().setRangeDrag(plot.yAxis.orientation())
+        else:
+            plot.axisRect().setRangeDrag(QtCore.Qt.Orientation.Horizontal | QtCore.Qt.Orientation.Vertical)
+
+    def mouseWheel(self):
+        plot = self.widget()
+        if type(plot).__name__ != 'QCustomPlot':
+            print("It's not a drawing sub win")
+            return
+        if plot.xAxis.selectedParts() == QCPAxis.SelectablePart.spAxis:
+            plot.axisRect().setRangeZoom(plot.xAxis.orientation())
+        elif plot.yAxis.selectedParts() == QCPAxis.SelectablePart.spAxis:
+            plot.axisRect().setRangeZoom(plot.yAxis.orientation())
+        else:
+            plot.axisRect().setRangeZoom(QtCore.Qt.Orientation.Horizontal | QtCore.Qt.Orientation.Vertical)
