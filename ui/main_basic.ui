@@ -67,8 +67,17 @@
    </widget>
    <widget class="QMenu" name="menu_5">
     <property name="title">
-     <string>分析</string>
+     <string>数据分析</string>
     </property>
+    <widget class="QMenu" name="menu_6">
+     <property name="title">
+      <string>分析内核选择</string>
+     </property>
+     <addaction name="action_kerner_scipy_stats"/>
+     <addaction name="action_kerner_statsmodels"/>
+     <addaction name="action_kerner_pingouin"/>
+    </widget>
+    <addaction name="menu_6"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_3"/>
@@ -151,7 +160,33 @@
     <string>Ctrl+4</string>
    </property>
   </action>
+  <action name="action_kerner_scipy_stats">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Scipy.stats</string>
+   </property>
+  </action>
+  <action name="action_kerner_statsmodels">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Statsmodels</string>
+   </property>
+  </action>
+  <action name="action_kerner_pingouin">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pingouin</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource/label.qrc"/>
+ </resources>
  <connections/>
 </ui>
