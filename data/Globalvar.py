@@ -31,3 +31,6 @@ def delete_value(name):
         log.debug(_global_dict)
     except KeyError:
         log.error("no values matched key " + name)
+
+def get_dict():
+    return _global_dict

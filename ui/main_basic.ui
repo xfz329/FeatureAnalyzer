@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resource/label.qrc">
+    <normaloff>:/pic/fig/cbeis.png</normaloff>:/pic/fig/cbeis.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
@@ -58,7 +62,7 @@
     <addaction name="action_tileSubWin"/>
     <addaction name="action_cascadeSubWin"/>
    </widget>
-   <widget class="QMenu" name="menu_4">
+   <widget class="QMenu" name="help">
     <property name="title">
      <string>关于</string>
     </property>
@@ -69,7 +73,7 @@
     <property name="title">
      <string>数据分析</string>
     </property>
-    <widget class="QMenu" name="menu_6">
+    <widget class="QMenu" name="menu_kernel">
      <property name="title">
       <string>分析内核选择</string>
      </property>
@@ -77,13 +81,25 @@
      <addaction name="action_kerner_statsmodels"/>
      <addaction name="action_kerner_pingouin"/>
     </widget>
-    <addaction name="menu_6"/>
+    <addaction name="menu_kernel"/>
+    <addaction name="action_T"/>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+    <addaction name="action_3"/>
+    <addaction name="action_4"/>
+    <addaction name="action_5"/>
+    <addaction name="action_6"/>
+    <addaction name="action_7"/>
+    <addaction name="action_8"/>
+    <addaction name="action_9"/>
+    <addaction name="action_10"/>
+    <addaction name="action_11"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_3"/>
    <addaction name="menu_2"/>
    <addaction name="menu_5"/>
-   <addaction name="menu_4"/>
+   <addaction name="help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
@@ -161,27 +177,119 @@
    </property>
   </action>
   <action name="action_kerner_scipy_stats">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Scipy.stats</string>
    </property>
   </action>
   <action name="action_kerner_statsmodels">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="text">
     <string>Statsmodels</string>
    </property>
   </action>
   <action name="action_kerner_pingouin">
-   <property name="checkable">
-    <bool>true</bool>
+   <property name="icon">
+    <iconset>
+     <normalon>:/pic/resource/fig/pingouin.png</normalon>
+    </iconset>
    </property>
    <property name="text">
     <string>Pingouin</string>
+   </property>
+  </action>
+  <action name="action_T">
+   <property name="text">
+    <string>方差分析与T检验</string>
+   </property>
+   <property name="toolTip">
+    <string>ANOVA and T-test</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>贝叶斯</string>
+   </property>
+   <property name="toolTip">
+    <string>Bayesian</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>圆弧处理</string>
+   </property>
+   <property name="toolTip">
+    <string>Circular</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>相关性与回归</string>
+   </property>
+   <property name="toolTip">
+    <string>Correlation and regression</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>偶然性</string>
+   </property>
+   <property name="toolTip">
+    <string>Contingency</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>分布</string>
+   </property>
+   <property name="toolTip">
+    <string>Distribution</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>影响因子</string>
+   </property>
+   <property name="toolTip">
+    <string>Effect sizes</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>多重比较和事后检验</string>
+   </property>
+   <property name="toolTip">
+    <string>Multiple comparisons and post-hoc tests</string>
+   </property>
+  </action>
+  <action name="action_8">
+   <property name="text">
+    <string>多元检验</string>
+   </property>
+   <property name="toolTip">
+    <string>Multivariate tests</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>非参数检验</string>
+   </property>
+   <property name="toolTip">
+    <string>Non-parametric</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="text">
+    <string>功率分析</string>
+   </property>
+   <property name="toolTip">
+    <string>Power analysis</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>可靠性与一致性</string>
+   </property>
+   <property name="toolTip">
+    <string>Reliability and consistency</string>
    </property>
   </action>
  </widget>

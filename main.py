@@ -23,16 +23,19 @@ class Global_MainWindow(Ui_MainWindow):
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
+        self.menu_5.setToolTipsVisible(True)
         # self.mdiArea.setActivationOrder(QMdiArea.WindowOrder.ActivationHistoryOrder)
         self.swm = SubwindowManager(self.mdiArea)
         self.action_author.triggered.connect(self.show_author)
         self.action_logs.triggered.connect(self.show_changelogs)
         self.action_open.triggered.connect(self.open)
         self.menu_new_win.triggered.connect(self.create_new_subwindow)
+        self.menu_kernel.triggered.connect(self.choose_kernel)
         self.action_cascadeSubWin.triggered.connect(self.mdiArea.cascadeSubWindows)
         self.action_tileSubWin.triggered.connect(self.mdiArea.tileSubWindows)
         self.action_draw.triggered.connect(self.draw)
         self.create_new_subwindow(self.action_win_data)
+        self.action_T.triggered.connect(self.set_para)
         self.update_statusbar("系统初始化完毕")
 
 
@@ -53,6 +56,10 @@ class Global_MainWindow(Ui_MainWindow):
         datetime = QtCore.QDateTime.currentDateTime()
         text = datetime.toString("HH:mm:ss")
         self.statusbar.showMessage(text+"  "+msg, 5000)
+
+    def choose_kernel(self):
+        from PyQt5.QtWidgets import QMessageBox
+        QMessageBox.information(None,"分析内核设置","目前所有统计分析功能均通过Pingouin（0.5.1）完成。Pingouin内部使用了部分SciPy.stats的统计分析功能。其他分析内核功能请期待版本更新。",QMessageBox.Ok)
 
     def create_new_subwindow(self, action):
         if action.objectName() == self.action_win_data.objectName():
@@ -84,6 +91,11 @@ class Global_MainWindow(Ui_MainWindow):
 
         from process.Draw import Draw
         Draw().draw(winD,winP)
+
+    def set_para(self):
+        from statistics_tools.pingouin import parameter
+        self.para =parameter.Ui_Parameter_MainWindow()
+        self.para.show()
 
 
 

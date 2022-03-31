@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="pic">
+    <file>fig/cbeis.png</file>
     <file>../resource/fig/logo.svg</file>
     <file>../resource/fig/pingouin.png</file>
     <file>../resource/fig/statsmodels.svg</file>
