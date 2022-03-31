@@ -8,7 +8,11 @@ from PyQt5 import QtCore, QtWidgets
 
 import data.Globalvar as gl
 from ui.main_basic import Ui_MainWindow
-from ui.subwindow.SubWindow import SubwindowManager
+from ui.subwindow.subwindow_manager import SubwindowManager
+from ui.subwindow.subwindow_data import SubWindow_Data
+from ui.subwindow.subwindow_plot import SubWindow_Plot
+from ui.subwindow.subwindow_logs import SubWindow_Logs
+from ui.subwindow.subwindow_result import SubWindow_Result
 from utils.logger import Logger
 
 
@@ -63,20 +67,20 @@ class Global_MainWindow(Ui_MainWindow):
 
     def create_new_subwindow(self, action):
         if action.objectName() == self.action_win_data.objectName():
-            self.swm.add_sub_window_data()
+            self.swm.add_sub_window(SubWindow_Data)
             return
         if action.objectName() == self.action_win_plot.objectName():
-            self.swm.add_sub_window_plot()
+            self.swm.add_sub_window(SubWindow_Plot)
             return
         if action.objectName() == self.action_win_log.objectName():
-            self.swm.add_sub_window_logs()
+            self.swm.add_sub_window(SubWindow_Logs)
             return
         if action.objectName() == self.action_win_result.objectName():
-            self.swm.add_sub_window_result()
+            self.swm.add_sub_window(SubWindow_Result)
             return
 
     def open(self):
-        win = self.swm.get_sub_window(SubwindowManager.Key_Window_Data)
+        win = self.swm.get_sub_window("Window_Data")
         self.log.info("add data to subwindow "+ win.windowTitle())
         from process.Open import OpenFiles as of
         df = of().open()
@@ -85,8 +89,8 @@ class Global_MainWindow(Ui_MainWindow):
             widget.model().setDataFrame(df)
 
     def draw(self):
-        winD = self.swm.get_sub_window(SubwindowManager.Key_Window_Data)
-        winP = self.swm.get_sub_window(SubwindowManager.Key_Window_Plot)
+        winD = self.swm.get_sub_window("Window_Data")
+        winP = self.swm.get_sub_window("Window_Plot")
         self.log.info("draw plot to subwindow " + winP.windowTitle()+ " using selected data in subwindow " + winD.windowTitle())
 
         from process.Draw import Draw

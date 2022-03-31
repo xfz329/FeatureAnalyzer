@@ -6,7 +6,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from statistics_tools.pingouin.parameter_basic import  Ui_MainWindow
 from data import Globalvar as gl
-from ui.subwindow.SubWindow import SubwindowManager
+from ui.subwindow.subwindow_manager import SubwindowManager
 
 
 class Ui_Parameter_MainWindow(Ui_MainWindow):
