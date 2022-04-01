@@ -3,7 +3,6 @@
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 19:40 on 2022/3/26
 
-import pandas as pd
 from PyQt5 import QtCore, QtWidgets
 
 import data.Globalvar as gl
@@ -14,6 +13,7 @@ from ui.subwindow.subwindow_plot import SubWindow_Plot
 from ui.subwindow.subwindow_logs import SubWindow_Logs
 from ui.subwindow.subwindow_result import SubWindow_Result
 from utils.logger import Logger
+from process.task_open import TaskOpen
 
 
 class Global_MainWindow(Ui_MainWindow):
@@ -24,6 +24,7 @@ class Global_MainWindow(Ui_MainWindow):
         self.count = 0
         self.log = Logger('fa').get_log()
         self.swm = None
+        self.taskOpen = TaskOpen(self.updateWinData)
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
@@ -82,8 +83,12 @@ class Global_MainWindow(Ui_MainWindow):
     def open(self):
         win = self.swm.get_sub_window("Window_Data")
         self.log.info("add data to subwindow "+ win.windowTitle())
-        from process.Open import OpenFiles as of
-        df = of().open()
+        gl.set_value("WinToAddData",win)
+        self.taskOpen.open_file()
+
+    def updateWinData(self):
+        win = gl.get_value("WinToAddData")
+        df = self.taskOpen.getDataFrame()
         if df is not None:
             widget = win.widget()
             widget.model().setDataFrame(df)
