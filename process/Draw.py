@@ -16,16 +16,6 @@ class Draw:
         self.x = []
         self.y = []
 
-    def check_data(self,data):
-        if data.widget().model().dataFrame().empty:
-            QMessageBox.warning(None, '警告', '当前数据窗口('+data.windowTitle()+')无数据可供绘制', QMessageBox.Ok)
-            return False
-        index = data.widget().tableView.selectedIndexes()
-        if len(index) == 0:
-            QMessageBox.warning(None, '警告', '当前数据窗口('+data.windowTitle()+')没有任何数据被选中！', QMessageBox.Ok)
-            return False
-        return True
-
     def prepare_data(self,data):
         index = data.widget().tableView.selectedIndexes()
         row_dict = {}
@@ -65,8 +55,6 @@ class Draw:
         customPlot.replot()
 
     def draw(self, data, plot):
-        if not self.check_data(data):
-            return False
         if self.prepare_data(data):
             self.start_plot(plot)
 

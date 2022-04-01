@@ -90,6 +90,8 @@ class Global_MainWindow(Ui_MainWindow):
 
     def draw(self):
         winD = self.swm.get_sub_window("Window_Data")
+        if not winD.isPreparedToDraw():
+            return
         winP = self.swm.get_sub_window("Window_Plot")
         self.log.info("draw plot to subwindow " + winP.windowTitle()+ " using selected data in subwindow " + winD.windowTitle())
 

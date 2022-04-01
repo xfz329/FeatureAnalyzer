@@ -132,3 +132,7 @@ dmypy.json
 /.idea
 
 *.xlsx
+*.xls
+*.csv
+
+*_rc.py
