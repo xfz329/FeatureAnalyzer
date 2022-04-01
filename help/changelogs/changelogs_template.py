@@ -34,9 +34,9 @@ class Template:
         <p class= normal>&emsp;&emsp;%(feature)s</p>
         """
 
-    latest_version = "0.03"
+    latest_version = "0.04"
 
-    latest_date = "2022.03.30"
+    latest_date = "2022.04.01"
 
     def __init__(self):
         self.res = ""
@@ -45,9 +45,18 @@ class Template:
         tab = ""
 
         f = ""
+        f += Template.feature % dict(feature="资源文件更新")
+        f += Template.feature % dict(feature="重新设计了MDI多窗口管理类，调整其控制逻辑")
+        f += Template.feature % dict(feature="引入线程以改善耗时任务的处理导致主UI线程失去响应")
+        f += Template.feature % dict(feature="增加数据统计的参数设置界面")
+        f += Template.feature % dict(feature="部分API调整")
+        f += Template.feature % dict(feature="Bug修复")
+        tab += Template.version % dict(num=0.04, date="2022.04.01", features=f)
+
+        f = ""
         f += Template.feature % dict(feature="MDI的子窗口类型增加至4种（数据图表、绘图、日志及输出）")
         f += Template.feature % dict(feature="完善MDI多窗口管理的逻辑")
-        f += Template.feature % dict(feature="增加对QCustomPlot（2.01）的绘图支持，增加图形的所发、拖拽等控制功能")
+        f += Template.feature % dict(feature="增加对QCustomPlot（2.01）的绘图支持，增加图形的缩放、拖拽等控制功能")
         f += Template.feature % dict(feature="部分API调整")
         f += Template.feature % dict(feature="Bug修复")
         tab += Template.version % dict(num=0.03, date="2022.03.30", features=f)
