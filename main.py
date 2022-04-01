@@ -21,7 +21,6 @@ class Global_MainWindow(Ui_MainWindow):
         super(Global_MainWindow, self).__init__()
         gl.init_()
         self.current_file = None
-        self.count = 0
         self.log = Logger('fa').get_log()
         self.swm = None
         self.taskOpen = TaskOpen(self.updateWinData)

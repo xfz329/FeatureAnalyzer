@@ -28,11 +28,12 @@ class OpenWorker(ProgressWorker):
     def run(self):
         if self.file.endswith(".csv"):
             self.df = pd.read_csv(self.file)
+            self.log.info("open files finished!")
         elif self.file.endswith(".xls") or self.file.endswith(".xlsx"):
             self.df = pd.read_excel(self.file)
+            self.log.info("open files finished!")
         else:
             self.log.error("Unsupported file type "+self.file)
-        self.log.info("open files finished!")
 
 class TaskOpen:
 
