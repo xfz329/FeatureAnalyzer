@@ -6,15 +6,16 @@
 from PyQt5 import QtCore, QtWidgets
 
 import data.Globalvar as gl
+import pingouinsettings.setparameter as sp
+from process.task_open import TaskOpen
 from ui.main_basic import Ui_MainWindow
-from ui.subwindow.subwindow_manager import SubwindowManager
 from ui.subwindow.subwindow_data import SubWindow_Data
-from ui.subwindow.subwindow_plot import SubWindow_Plot
 from ui.subwindow.subwindow_logs import SubWindow_Logs
+from ui.subwindow.subwindow_manager import SubwindowManager
+from ui.subwindow.subwindow_plot import SubWindow_Plot
 from ui.subwindow.subwindow_result import SubWindow_Result
 from utils.logger import Logger
-from process.task_open import TaskOpen
-import statistics_tools.pingouin.setparameter as sp
+
 
 class Global_MainWindow(Ui_MainWindow):
     def __init__(self):

@@ -3,12 +3,14 @@
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 15:10 on 2022/4/2
 
-import pingouin as pg
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import QStringListModel
-from statistics_tools.pingouin.setparameter.parameter_basic2 import Ui_MainWindow
 
-from utils.logger import Logger
+import pingouin as pg
 from data import Globalvar as gl
+from pingouinsettings.setparameter.parameter_basic import Ui_MainWindow
+from process.task import Task
+from utils.logger import Logger
 
 
 class Ui_Parameter_MainWindow(Ui_MainWindow):
@@ -17,7 +19,6 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.setupUi(self)
         self.log = Logger('fa').get_log()
         self.win_manager = win_manager
-        self.pushButton_help.clicked.connect(self.show_help)
 
         self.prepare_data()
 
@@ -39,14 +40,31 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
 
         self.init_list_view()
 
+        self.task = Task(self.show_help, "statistic")
+
+        self.add_to_1 = True
+        self.add_to_2 = True
+        self.add_to_3 = True
+        self.add_to_4 = True
+
+        self.pushButton_1.clicked.connect(self.clicked_button_1)
+        self.pushButton_2.clicked.connect(self.clicked_button_2)
+        self.pushButton_3.clicked.connect(self.clicked_button_3)
+        self.pushButton_4.clicked.connect(self.clicked_button_4)
+        self.pushButton_start.clicked.connect(self.start_analyse)
+        self.pushButton_help.clicked.connect(self.show_help)
 
 
         self.show_set_parameters(2)
         self.show_choose_parameters(2)
-        self.show_add_parameter(2)
+        self.show_add_parameter(4)
 
+    def start_analyse(self):
+        self.log.info("empty method!")
+        pass
 
     def show_help(self):
+        self.log.info("empty method!")
         pass
 
 
@@ -147,9 +165,9 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
                     self.comboBox_window.addItem(key)
 
         self.comboBox_database.addItem("")
-        list = pg.list_dataset().index.tolist()
-        for l in list:
-            self.comboBox_database.addItem(l)
+        temp = pg.list_dataset().index.tolist()
+        for t in temp:
+            self.comboBox_database.addItem(t)
 
         self.comboBox_window.activated.connect(self.load_data_from_win)
         self.comboBox_database.activated.connect(self.load_data_from_database)
@@ -174,4 +192,95 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
 
 
     def init_list_view(self):
-        pass
+        self.listView_all.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_all.clicked.connect(self.enable_all_buttons)
+
+        self.listView_1.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_1.clicked.connect(self.disable_button_1)
+
+        self.listView_2.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_2.clicked.connect(self.disable_button_2)
+
+        self.listView_3.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_3.clicked.connect(self.disable_button_3)
+
+        self.listView_4.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_4.clicked.connect(self.disable_button_4)
+
+    def enable_all_buttons(self):
+        self.add_to_1 = True
+        self.add_to_2 = True
+        self.add_to_3 = True
+        self.add_to_4 = True
+        self.pushButton_1.setText("添加")
+        self.pushButton_2.setText("添加")
+        self.pushButton_3.setText("添加")
+        self.pushButton_4.setText("添加")
+
+    def disable_button_1(self):
+        self.add_to_1 = False
+        self.pushButton_1.setText("移除")
+
+    def disable_button_2(self):
+        self.add_to_2 = False
+        self.pushButton_2.setText("移除")
+
+    def disable_button_3(self):
+        self.add_to_3 = False
+        self.pushButton_3.setText("移除")
+
+    def disable_button_4(self):
+        self.add_to_4 = False
+        self.pushButton_4.setText("移除")
+
+    # def change_button_1(self):
+    #
+    # def change_button_2(self):
+    #
+    # def change_button_3(self):
+    #
+    # def change_button_4(self):
+
+    def exchange_selected_list(self, start, end):
+        selected = start.selectedIndexes()
+        for i in selected:
+            num = i.row()
+            temp = start.model().stringList()
+            line = temp[num]
+            del (temp[num])
+            start.model().setStringList(temp)
+            temp = end.model().stringList()
+            temp.append(line)
+            end.model().setStringList(temp)
+
+    def clicked_button_1(self):
+        if self.add_to_1:
+            self.exchange_selected_list(self.listView_all,self.listView_1)
+        else:
+            self.exchange_selected_list(self.listView_1,self.listView_all)
+
+    def clicked_button_2(self):
+        if self.add_to_2:
+            self.exchange_selected_list(self.listView_all,self.listView_2)
+        else:
+            self.exchange_selected_list(self.listView_2,self.listView_all)
+
+    def clicked_button_3(self):
+        if self.add_to_3:
+            self.exchange_selected_list(self.listView_all,self.listView_3)
+        else:
+            self.exchange_selected_list(self.listView_3,self.listView_all)
+
+    def clicked_button_4(self):
+        if self.add_to_4:
+            self.exchange_selected_list(self.listView_all,self.listView_4)
+        else:
+            self.exchange_selected_list(self.listView_4,self.listView_all)
+
+    def change_method_name(self,s):
+        self.label_method.setText(s)
+
+
+
+
+
