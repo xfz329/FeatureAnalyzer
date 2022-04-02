@@ -6,7 +6,7 @@
 from PyQt5 import QtCore, QtWidgets
 
 import data.Globalvar as gl
-import pingouinsettings.setparameter as sp
+import pingouin_settings.methods as pm
 from process.task_open import TaskOpen
 from ui.main_basic import Ui_MainWindow
 from ui.subwindow.subwindow_data import SubWindow_Data
@@ -104,9 +104,7 @@ class Global_MainWindow(Ui_MainWindow):
         Draw().draw(winD,winP)
 
     def set_para(self):
-
-        self.para =sp.Ui_Parameter_MainWindow(self.swm)
-        # self.para.setswm(self.swm)
+        self.para =pm.Ui_Anova_MainWindow(self.swm)
         self.para.show()
 
 

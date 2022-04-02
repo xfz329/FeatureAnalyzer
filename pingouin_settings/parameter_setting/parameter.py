@@ -1,5 +1,5 @@
 #   -*- coding:utf-8 -*-
-#   The setparameter.py in FeatureAnalyzer
+#   The parameter.py in FeatureAnalyzer
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 15:10 on 2022/4/2
 
@@ -8,7 +8,7 @@ from PyQt5.QtCore import QStringListModel
 
 import pingouin as pg
 from data import Globalvar as gl
-from pingouinsettings.setparameter.parameter_basic import Ui_MainWindow
+from pingouin_settings.parameter_setting.parameter_basic import Ui_MainWindow
 from process.task import Task
 from utils.logger import Logger
 
@@ -37,10 +37,7 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.list_model_4 = QStringListModel()
         self.listView_4.setModel(self.list_model_4)
 
-
         self.init_list_view()
-
-        self.task = Task(self.show_help, "statistic")
 
         self.add_to_1 = True
         self.add_to_2 = True
@@ -54,19 +51,26 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.pushButton_start.clicked.connect(self.start_analyse)
         self.pushButton_help.clicked.connect(self.show_help)
 
-
-        self.show_set_parameters(2)
-        self.show_choose_parameters(2)
-        self.show_add_parameter(4)
+        self.task = Task(self.info_analyse_finished, "statistic")
 
     def start_analyse(self):
         self.log.info("empty method!")
-        pass
+        df = pg.read_dataset('anova')
+        # para = {'dv':'Pain threshold', 'between':'Hair color', 'data':df,'detailed':True}
+        self.task.set_worker(pg.anova, dv='Pain threshold', between='Hair color', data=df, detailed=True)
+        raise NotImplementedError
 
     def show_help(self):
         self.log.info("empty method!")
-        pass
+        raise NotImplementedError
 
+    def info_analyse_finished(self):
+        self.log.info("get the answer calculated in the thread")
+        win = self.win_manager.get_sub_window("Window_Result")
+        self.log.info(self.task.get_ans())
+        win.setText(str(self.task.get_ans()))
+        self.log.info("empty method!")
+        raise NotImplementedError
 
     def show_set_parameters(self, num):
         discard = 4 - num
@@ -277,7 +281,7 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         else:
             self.exchange_selected_list(self.listView_4,self.listView_all)
 
-    def change_method_name(self,s):
+    def set_method_name(self,s):
         self.label_method.setText(s)
 
 

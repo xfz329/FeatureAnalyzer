@@ -34,15 +34,22 @@ class Template:
         <p class= normal>&emsp;&emsp;%(feature)s</p>
         """
 
-    latest_version = "0.04"
+    latest_version = "0.05"
 
-    latest_date = "2022.04.01"
+    latest_date = "2022.04.02"
 
     def __init__(self):
         self.res = ""
 
     def get(self):
         tab = ""
+
+        f = ""
+        f += Template.feature % dict(feature="数据统计的参数设置界面，可以自由定制")
+        f += Template.feature % dict(feature="重新设计了线程控制任务的逻辑")
+        f += Template.feature % dict(feature="部分API调整")
+        f += Template.feature % dict(feature="Bug修复")
+        tab += Template.version % dict(num=0.05, date="2022.04.02", features=f)
 
         f = ""
         f += Template.feature % dict(feature="资源文件更新")

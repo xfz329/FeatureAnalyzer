@@ -44,3 +44,8 @@ class SubWindow_Result(MyQMdiSubWindow):
         formLayout_2.setWidget(0, QtWidgets.QFormLayout.SpanningRole, scrollArea)
 
         self.setWidget(centralwidget)
+        self.label = label
+
+    def setText(self,s):
+        temp = self.label.text()
+        self.label.setText(temp+s)
