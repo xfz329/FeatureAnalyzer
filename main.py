@@ -23,7 +23,7 @@ class Global_MainWindow(Ui_MainWindow):
         self.current_file = None
         self.log = Logger('fa').get_log()
         self.swm = None
-        self.taskOpen = TaskOpen(self.updateWinData)
+        self.taskOpen = TaskOpen(self.updateWinData,"open")
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
@@ -83,11 +83,11 @@ class Global_MainWindow(Ui_MainWindow):
         win = self.swm.get_sub_window("Window_Data")
         self.log.info("add data to subwindow "+ win.windowTitle())
         gl.set_value("WinToAddData",win)
-        self.taskOpen.open_file()
+        self.taskOpen.set_worker()
 
     def updateWinData(self):
         win = gl.get_value("WinToAddData")
-        df = self.taskOpen.getDataFrame()
+        df = self.taskOpen.get_ans()
         if df is not None:
             widget = win.widget()
             widget.model().setDataFrame(df)
@@ -105,6 +105,7 @@ class Global_MainWindow(Ui_MainWindow):
     def set_para(self):
         from statistics_tools.pingouin import parameter
         self.para =parameter.Ui_Parameter_MainWindow()
+        self.para.setswm(self.swm)
         self.para.show()
 
 
