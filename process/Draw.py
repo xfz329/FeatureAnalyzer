@@ -5,7 +5,6 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPen, QBrush, QColor
-from PyQt5.QtWidgets import QMessageBox
 from QCustomPlot2 import *
 from utils.logger import Logger
 

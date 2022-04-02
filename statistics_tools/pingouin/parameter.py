@@ -8,6 +8,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QStringListModel
 
 from data import Globalvar as gl
+from utils.logger import Logger
 from process.task import Task
 from statistics_tools.pingouin.parameter_basic import Ui_MainWindow
 
@@ -66,11 +67,12 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.swm = None
 
         self.taskStatistic = Task(self.info,"statistic")
+        self.log = Logger('fa').get_log()
 
 
     def info(self):
-        print("here")
-        print(self.taskStatistic.get_ans())
+        self.log.info("get the answer calculated in the thread")
+        self.log.info(self.taskStatistic.get_ans())
 
     def setswm(self,s):
         self.swm = s

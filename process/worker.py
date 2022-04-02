@@ -22,7 +22,7 @@ class Worker(ProgressWorker):
     def run(self):
         self.log.info("task starts at "+time.strftime("%H:%M:%S",time.localtime()))
         self.ans = self.handle_job(** self.paras)
-        self.log.info("task finishs at " + time.strftime("%H:%M:%S", time.localtime()))
+        self.log.info("task finishes at " + time.strftime("%H:%M:%S", time.localtime()))
 
     def handle_job(self, ** kwargs):
         pass

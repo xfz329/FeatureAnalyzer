@@ -14,7 +14,7 @@ from ui.subwindow.subwindow_logs import SubWindow_Logs
 from ui.subwindow.subwindow_result import SubWindow_Result
 from utils.logger import Logger
 from process.task_open import TaskOpen
-
+import statistics_tools.pingouin.setparameter as sp
 
 class Global_MainWindow(Ui_MainWindow):
     def __init__(self):
@@ -103,9 +103,9 @@ class Global_MainWindow(Ui_MainWindow):
         Draw().draw(winD,winP)
 
     def set_para(self):
-        from statistics_tools.pingouin import parameter
-        self.para =parameter.Ui_Parameter_MainWindow()
-        self.para.setswm(self.swm)
+
+        self.para =sp.Ui_Parameter_MainWindow(self.swm)
+        # self.para.setswm(self.swm)
         self.para.show()
 
 
