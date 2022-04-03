@@ -12,26 +12,28 @@ class Template:
             <meta charset="UTF-8">
             <title>Title</title>
             <style type=text/css>
-                h1 {text-align: left;font-family:Times New Roman;font-size: 30px}
-                p.normal {text-align: left;font-family:Times New Roman;font-size: 14px;font-style:normal;}
-                p.italic {text-align: left;font-family:Times New Roman;font-size: 14px;font-style:italic;}
+                dt {text-align: left;font-family:Times New Roman;font-size: 30px}
+                dd.normal {text-align: left;font-family:Times New Roman;font-size: 14px;font-style:normal;}
+                dd.italic {text-align: left;font-family:Times New Roman;font-size: 14px;font-style:italic;}
             </style>
         </head>
         <body>
+            <dl>
             %(versions)s
+            </dl>
         </body>
         </html>
         """
     version = \
         """
-        <h1>&emsp;%(num)s</h1>
-        <p class= italic>&emsp;Released on %(date)s</p>
+        <dt>&emsp;%(num)s</dt>
+        <dd class= italic>&emsp;Released on %(date)s</dd>
         %(features)s
         """
 
     feature = \
         """
-        <p class= normal>&emsp;&emsp;%(feature)s</p>
+        <dd class= normal>&emsp;&emsp;%(feature)s</dd>
         """
 
     latest_version = "0.05"

@@ -1,9 +1,29 @@
 import logging
 import logging.config
 from pathlib import Path
-import os
+import os, sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
+
+LOG_PATH = LOG_PATH=os.path.join(BASE_DIR,'log')
+print(LOG_PATH)
+if not os.path.exists(LOG_PATH):
+    os.makedirs(LOG_PATH)
+DEBUG_FILE = os.path.join(LOG_PATH,'debug.log')
+WARN_FILE = os.path.join(LOG_PATH,'warn.log')
+INFO_FILE = os.path.join(LOG_PATH,'info.log')
+FILES = [DEBUG_FILE, WARN_FILE, INFO_FILE]
+
+for f in FILES:
+    if not os.path.exists(f):
+        if str(sys.platform).startswith('win'):
+            with open(f, 'a+') as fp:
+                fp.close()
+        else:
+            os.mknod(f)
+
+
 config= {
     'version' : 1,
     'disable_existing_loggers' : False,
@@ -18,9 +38,6 @@ config= {
         },
     },
     'filters' : {
-        'require_debug_true' : {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
     },
     'handlers': {
         'console' : {
