@@ -53,6 +53,11 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
 
         self.task = Task(self.info_analyse_finished, "statistic")
 
+        self.df = None
+
+    def set_widgets(self):
+        raise NotImplementedError
+
     def start_analyse(self):
         self.log.info("empty method!")
         df = pg.read_dataset('anova')
@@ -182,6 +187,7 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
             win = gl.get_value(win_name)
             columns = win.model().dataFrameColumns()
             self.list_model_all.setStringList(columns)
+            self.df = win.model().dataFrame()
 
     def load_data_from_database(self):
         database = self.comboBox_database.currentText()
@@ -189,6 +195,7 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
             df = pg.read_dataset(database)
             columns = df.columns
             win = self.win_manager.get_sub_window("Window_Data")
+            self.df = df
             if df is not None:
                 widget = win.widget()
                 widget.model().setDataFrame(df)
@@ -237,13 +244,6 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.add_to_4 = False
         self.pushButton_4.setText("移除")
 
-    # def change_button_1(self):
-    #
-    # def change_button_2(self):
-    #
-    # def change_button_3(self):
-    #
-    # def change_button_4(self):
 
     def exchange_selected_list(self, start, end):
         selected = start.selectedIndexes()

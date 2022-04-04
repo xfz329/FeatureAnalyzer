@@ -8,6 +8,19 @@
 python setup.py build
 python setup.py install
 ~~~
+
+## 修改代码太长不看版
+1. 安装openpyxl
+    * pip install openpyxl
+2. 针对qtpandas\views\EditDialogs.py文件，修改以下代码
+    * Line  16  import pandas
+    * Line  17  from pandas.tslib import NaTType    -> from pandas._libs.lib import *
+    * Line 177  if isinstance(defaultValue, NaTType):   ->    if isinstance(defaultValue, type(pandas.NaT)):
+3. 针对qtpandas\views\DataTableView.py，修改以下代码
+    * Line 66   result = drag.start(Qt.MoveAction)  ->  result = drag.exec_(Qt.MoveAction)
+4. 针对qtpandas\models\DataFrameModel.py文件，修改以下代码
+    * Line 366,368,376,380,394,408 .ix[row_index, column_index] -> .loc[row_index, column_index]
+
 ## 修改代码
 由于qtpandas 使用的pandas版本太低，部分api 已经进行了调整，需要我们手动修改代码才能正确运行，参考[博文](https://www.cnblogs.com/i-am-sailing/p/13739815.html)具体而言包括：
 1. ModuleNotFoundError: No module named 'pandas.tslib'
