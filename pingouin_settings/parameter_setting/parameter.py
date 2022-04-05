@@ -37,23 +37,32 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.list_model_4 = QStringListModel()
         self.listView_4.setModel(self.list_model_4)
 
+        self.list_model_5 = QStringListModel()
+        self.listView_5.setModel(self.list_model_5)
+
         self.init_list_view()
 
         self.add_to_1 = True
         self.add_to_2 = True
         self.add_to_3 = True
         self.add_to_4 = True
+        self.add_to_5 = True
 
         self.pushButton_1.clicked.connect(self.clicked_button_1)
         self.pushButton_2.clicked.connect(self.clicked_button_2)
         self.pushButton_3.clicked.connect(self.clicked_button_3)
         self.pushButton_4.clicked.connect(self.clicked_button_4)
+        self.pushButton_5.clicked.connect(self.clicked_button_5)
         self.pushButton_start.clicked.connect(self.start_analyse)
         self.pushButton_help.clicked.connect(self.show_help)
 
         self.task = Task(self.info_analyse_finished, "statistic")
 
         self.df = None
+
+        self.url = None
+        self.columns = {}
+        self.set_columns()
 
     def set_widgets(self):
         raise NotImplementedError
@@ -66,8 +75,9 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         raise NotImplementedError
 
     def show_help(self):
-        self.log.info("empty method!")
-        raise NotImplementedError
+        from PyQt5.QtCore import QUrl
+        from PyQt5.QtGui import QDesktopServices
+        QDesktopServices.openUrl(QUrl(self.url))
 
     def info_analyse_finished(self):
         self.log.info("get the answer calculated in the thread")
@@ -134,9 +144,16 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
             return
 
     def show_add_parameter(self,num):
-        discard = 4 - num
-        if discard < 0 or discard > 4:
+        discard = 5 - num
+        if discard < 0 or discard > 5:
             self.log.error("num is too large to choose parameters")
+            return
+        if discard > 0:
+            self.pushButton_5.setVisible(False)
+            self.listView_5.setVisible(False)
+            self.label_l5.setVisible(False)
+            discard = discard - 1
+        else:
             return
         if discard > 0:
             self.pushButton_4.setVisible(False)
@@ -218,15 +235,20 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         self.listView_4.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
         self.listView_4.clicked.connect(self.disable_button_4)
 
+        self.listView_5.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.listView_5.clicked.connect(self.disable_button_5)
+
     def enable_all_buttons(self):
         self.add_to_1 = True
         self.add_to_2 = True
         self.add_to_3 = True
         self.add_to_4 = True
+        self.add_to_5 = True
         self.pushButton_1.setText("添加")
         self.pushButton_2.setText("添加")
         self.pushButton_3.setText("添加")
         self.pushButton_4.setText("添加")
+        self.pushButton_5.setText("添加")
 
     def disable_button_1(self):
         self.add_to_1 = False
@@ -243,6 +265,10 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
     def disable_button_4(self):
         self.add_to_4 = False
         self.pushButton_4.setText("移除")
+
+    def disable_button_5(self):
+        self.add_to_5 = False
+        self.pushButton_5.setText("移除")
 
 
     def exchange_selected_list(self, start, end):
@@ -281,9 +307,24 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         else:
             self.exchange_selected_list(self.listView_4,self.listView_all)
 
+    def clicked_button_5(self):
+        if self.add_to_5:
+            self.exchange_selected_list(self.listView_all,self.listView_5)
+        else:
+            self.exchange_selected_list(self.listView_5,self.listView_all)
+
     def set_method_name(self,s):
         self.label_method.setText(s)
 
+    def set_columns(self):
+        self.columns.setdefault("Source","变量名(Source)")
+        self.columns.setdefault("SS","平方和(Sums of squares)")
+        self.columns.setdefault("DF","自由度(Degrees of freedom)")
+        self.columns.setdefault("MS","均方(Mean square)")
+        self.columns.setdefault("F","F值")
+        self.columns.setdefault("p-unc","未校验的p值(uncorrected p-values)")
+        self.columns.setdefault("n2","η2")
+        self.columns.setdefault("np2","偏η2")
 
 
 

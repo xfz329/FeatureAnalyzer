@@ -3,7 +3,6 @@
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 19:02 on 2022/4/2
 
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 import pingouin as pg
@@ -17,6 +16,7 @@ class Ui_Anova_MainWindow(Ui_Parameter_MainWindow):
 
     def set_widgets(self):
         self.label_method.setText("One-way and N-way ANOVA")
+        self.url = "https://pingouin-stats.org/generated/pingouin.anova.html#pingouin.anova"
 
         self.show_add_parameter(2)
         self.label_l1.setText("独立变量")
@@ -73,10 +73,7 @@ class Ui_Anova_MainWindow(Ui_Parameter_MainWindow):
         self.log.info("get the answer calculated in the thread")
         ans = self.task.get_ans()
         self.log.info(ans)
-        ans.rename(columns={"Source": "变量名(Source)", "SS": "平方和(Sums of squares)",
-                            "DF": "自由度(Degrees of freedom)", "MS": "均方(Mean square)",
-                            "F": "F值", "p-unc": "未校验的p值(uncorrected p-values)",
-                            "n2": "η2", "np2": "偏η2"}, inplace=True)
+        ans.rename(columns=self.columns, inplace=True)
         self.log.info(ans)
         win = self.win_manager.get_sub_window("Window_Result")
         win.setText(str(ans))

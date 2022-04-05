@@ -104,7 +104,7 @@ class Global_MainWindow(Ui_MainWindow):
         Draw().draw(winD,winP)
 
     def set_para(self):
-        self.para =pm.Ui_Anova_MainWindow(self.swm)
+        self.para =pm.Ui_Ancova_MainWindow(self.swm)
         self.para.show()
 
 
