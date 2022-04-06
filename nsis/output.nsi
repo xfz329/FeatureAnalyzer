@@ -2,7 +2,7 @@
 
 ; 安装程序初始定义常量
 !define PRODUCT_NAME "FeatureAnalyzer"
-!define PRODUCT_VERSION "0.05"
+!define PRODUCT_VERSION "0.06"
 !define PRODUCT_PUBLISHER "浙江大学生仪学院"
 !define PRODUCT_WEB_SITE "http://www.cbeis.zju.edu.cn/main.htm"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
