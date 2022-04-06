@@ -5,15 +5,17 @@
 import data.Globalvar as gl
 from utils.logger import Logger
 from ui.subwindow.subwindow_data import SubWindow_Data
-from ui.subwindow.subwindow_plot import SubWindow_Plot
+from ui.subwindow.subwindow_qcustomplot import SubWindow_QCustomPlot
 from ui.subwindow.subwindow_logs import SubWindow_Logs
 from ui.subwindow.subwindow_result import SubWindow_Result
+from ui.subwindow.subwindow_matplot import SubWindow_Matplot
 
 class SubwindowManager(object):
 
     def __init__(self,area):
         gl.set_value("Window_Data","数据窗口")
-        gl.set_value("Window_Plot", "绘图窗口")
+        gl.set_value("Window_Plot", "绘图窗口(qcustomplot)")
+        gl.set_value("Window_Matplot", "绘图窗口(matplot)")
         gl.set_value("Window_Logs", "日志窗口")
         gl.set_value("Window_Result", "输出窗口")
         self.mdi_area = area
@@ -37,7 +39,9 @@ class SubwindowManager(object):
             if win_type == "Window_Data":
                 self.add_sub_window(SubWindow_Data)
             elif win_type == "Window_Plot":
-                self.add_sub_window(SubWindow_Plot)
+                self.add_sub_window(SubWindow_QCustomPlot)
+            elif win_type == "Window_Matplot":
+                self.add_sub_window(SubWindow_Matplot)
             elif win_type == "Window_Logs":
                 self.add_sub_window(SubWindow_Logs)
             elif win_type == "Window_Result":

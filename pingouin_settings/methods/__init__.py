@@ -11,3 +11,8 @@ from pingouin_settings.methods.anova_ttest.mixed_anova import *
 from pingouin_settings.methods.anova_ttest.welch_anova import *
 from pingouin_settings.methods.anova_ttest.tost import *
 from pingouin_settings.methods.anova_ttest.ttest import *
+
+
+
+
+from pingouin_settings.methods.plotting.plot_blandaltman import *

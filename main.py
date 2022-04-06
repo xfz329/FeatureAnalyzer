@@ -42,6 +42,7 @@ class Global_MainWindow(Ui_MainWindow):
         self.action_draw.triggered.connect(self.draw)
         self.create_new_subwindow(self.action_win_data)
         self.menu_anova_ttest.triggered.connect(self.show_para_window)
+        self.menu_plotting.triggered.connect(self.show_para_window)
         self.update_statusbar("系统初始化完毕")
 
 
@@ -103,7 +104,8 @@ class Global_MainWindow(Ui_MainWindow):
 
     def set_s2d(self):
         self.s2d.setdefault(self.action_win_data.objectName(), sub.SubWindow_Data)
-        self.s2d.setdefault(self.action_win_plot.objectName(), sub.SubWindow_Plot)
+        self.s2d.setdefault(self.action_win_plot_q.objectName(), sub.SubWindow_QCustomPlot)
+        self.s2d.setdefault(self.action_win_plot_m.objectName(), sub.SubWindow_Matplot)
         self.s2d.setdefault(self.action_win_result.objectName(), sub.SubWindow_Result)
         self.s2d.setdefault(self.action_win_log.objectName(), sub.SubWindow_Logs)
 
@@ -117,6 +119,11 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_welch_anova.objectName(),pm.Ui_Welch_MainWindow)
         self.m2p.setdefault(self.action_tost.objectName(),pm.Ui_Tost_MainWindow)
         self.m2p.setdefault(self.action_ttest.objectName(),pm.Ui_Ttest_MainWindow)
+
+
+
+        # plotting
+        self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)
 
 
 

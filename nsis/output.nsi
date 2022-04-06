@@ -41,7 +41,7 @@ SetCompressor lzma
 ; ------ MUI 现代界面定义结束 ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "D:\UrgeData\Documents\Codes\Graduate\FeatureAnalyzer\nsis\FeatureAnalyzer_0.05.exe"
+OutFile "D:\UrgeData\Documents\Codes\Graduate\FeatureAnalyzer\nsis\FeatureAnalyzer_0.06_x64-setup.exe"
 InstallDir "$PROGRAMFILES\FeatureAnalyzer"
 ShowInstDetails show
 ShowUnInstDetails show

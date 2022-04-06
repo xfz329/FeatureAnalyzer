@@ -7,5 +7,6 @@ from .myqmidsubwindow import *
 from .subwindow_data import *
 from .subwindow_logs import *
 from .subwindow_manager import *
-from .subwindow_plot import *
+from .subwindow_qcustomplot import *
+from .subwindow_matplot import *
 from .subwindow_result import *

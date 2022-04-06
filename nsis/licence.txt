@@ -1,2 +1,1 @@
-这是一个空的licence文件。
-花哥还什么都没写。
+It's an empty licence file.
