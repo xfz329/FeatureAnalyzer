@@ -19,8 +19,13 @@ class Task:
     def get_ans(self):
         return self.worker.get_ans()
 
-    def set_worker(self,func,** kwargs):
+    def set_worker(self,func,* pwargs, ** kwargs):
         self.worker.set_job(func)
-        self.worker.set_parameters(**kwargs)
+        self.worker.set_parameters(* pwargs,**kwargs)
         self.log.info("The work job has been bounded to " + str(self.worker.handle_job))
+        for l in pwargs:
+            self.log.info("value is "+str(l))
+        for key in kwargs.keys():
+            if key != "data":
+                self.log.info("key is "+key+" , value is "+str(kwargs[key]))
         self.thread.start()

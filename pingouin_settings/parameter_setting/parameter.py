@@ -68,10 +68,6 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         raise NotImplementedError
 
     def start_analyse(self):
-        self.log.info("empty method!")
-        df = pg.read_dataset('anova')
-        # para = {'dv':'Pain threshold', 'between':'Hair color', 'data':df,'detailed':True}
-        self.task.set_worker(pg.anova, dv='Pain threshold', between='Hair color', data=df, detailed=True)
         raise NotImplementedError
 
     def show_help(self):
@@ -81,11 +77,15 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
 
     def info_analyse_finished(self):
         self.log.info("get the answer calculated in the thread")
+        ans = self.task.get_ans()
+        self.log.info(ans)
+        import pandas
+        if type(ans) == pandas.core.frame.DataFrame:
+            ans.rename(columns=self.columns, inplace=True)
+            ans = ans.round(3)
+            self.log.info(ans)
         win = self.win_manager.get_sub_window("Window_Result")
-        self.log.info(self.task.get_ans())
-        win.setText(str(self.task.get_ans()))
-        self.log.info("empty method!")
-        raise NotImplementedError
+        win.setText(str(ans))
 
     def show_set_parameters(self, num):
         discard = 4 - num
@@ -313,18 +313,28 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         else:
             self.exchange_selected_list(self.listView_5,self.listView_all)
 
-    def set_method_name(self,s):
-        self.label_method.setText(s)
-
     def set_columns(self):
         self.columns.setdefault("Source","变量名(Source)")
         self.columns.setdefault("SS","平方和(Sums of squares)")
         self.columns.setdefault("DF","自由度(Degrees of freedom)")
+        self.columns.setdefault("ddof1", "自由度分子")
+        self.columns.setdefault("ddof2", "自由度分母")
         self.columns.setdefault("MS","均方(Mean square)")
         self.columns.setdefault("F","F值")
         self.columns.setdefault("p-unc","未校验的p值(uncorrected p-values)")
         self.columns.setdefault("n2","η2")
         self.columns.setdefault("np2","偏η2")
+        self.columns.setdefault("ng2", "generalized eta squared")
+        # 'eps': Greenhouse-Geisser epsilon factor (= index of sphericity)
+        #
+        # 'p-GG-corr': Greenhouse-Geisser corrected p-value
+        #
+        # 'W-spher': Sphericity test statistic
+        #
+        # 'p-spher': p-value of the sphericity test
+        #
+        # 'sphericity': sphericity of the data (boolean)
+
 
 
 

@@ -5,3 +5,9 @@
 
 from pingouin_settings.methods.anova_ttest.anova import *
 from pingouin_settings.methods.anova_ttest.ancova import *
+from pingouin_settings.methods.anova_ttest.rm_anova import *
+from pingouin_settings.methods.anova_ttest.epsilon import *
+from pingouin_settings.methods.anova_ttest.mixed_anova import *
+from pingouin_settings.methods.anova_ttest.welch_anova import *
+from pingouin_settings.methods.anova_ttest.tost import *
+from pingouin_settings.methods.anova_ttest.ttest import *

@@ -111,6 +111,12 @@ class Global_MainWindow(Ui_MainWindow):
         # anova and t_test
         self.m2p.setdefault(self.action_anova.objectName(),pm.Ui_Anova_MainWindow)
         self.m2p.setdefault(self.action_ancova.objectName(),pm.Ui_Ancova_MainWindow)
+        self.m2p.setdefault(self.action_rm_anova.objectName(),pm.Ui_RM_Anova_MainWindow)
+        self.m2p.setdefault(self.action_epsilon.objectName(),pm.Ui_Epsilon_MainWindow)
+        self.m2p.setdefault(self.action_mixed_anova.objectName(),pm.Ui_Mixed_Anova_MainWindow)
+        self.m2p.setdefault(self.action_welch_anova.objectName(),pm.Ui_Welch_MainWindow)
+        self.m2p.setdefault(self.action_tost.objectName(),pm.Ui_Tost_MainWindow)
+        self.m2p.setdefault(self.action_ttest.objectName(),pm.Ui_Ttest_MainWindow)
 
 
 
