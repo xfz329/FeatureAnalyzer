@@ -65,10 +65,6 @@ class Ui_Anova_MainWindow(Ui_Parameter_MainWindow):
         self.task.set_worker(pg.anova, **paras)
         # self.task.set_worker(pg.anova, dv='Pain threshold', between='Hair color', data=self.df, detailed=True)
 
-    def show_help(self):
-        self.log.info("empty method!")
-        pass
-
     def info_analyse_finished(self):
         self.log.info("get the answer calculated in the thread")
         ans = self.task.get_ans()

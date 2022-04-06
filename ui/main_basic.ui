@@ -81,19 +81,164 @@
      <addaction name="action_kerner_statsmodels"/>
      <addaction name="action_kerner_pingouin"/>
     </widget>
+    <widget class="QMenu" name="menu_anova_ttest">
+     <property name="title">
+      <string>方差分析与T检验</string>
+     </property>
+     <addaction name="action_anova"/>
+     <addaction name="action_ancova"/>
+     <addaction name="action_rm_anova"/>
+     <addaction name="action_epsilon"/>
+     <addaction name="action_mixed_anova"/>
+     <addaction name="action_welch_anova"/>
+     <addaction name="action_tost"/>
+     <addaction name="action_ttest"/>
+    </widget>
+    <widget class="QMenu" name="menu_bayesian">
+     <property name="title">
+      <string>贝叶斯</string>
+     </property>
+     <addaction name="action_bayesfactor_binom"/>
+     <addaction name="action_bayesfactor_ttest"/>
+     <addaction name="action_bayesfactor_pearson"/>
+    </widget>
+    <widget class="QMenu" name="menu_circular">
+     <property name="title">
+      <string>圆弧处理</string>
+     </property>
+     <addaction name="action_convert_angles"/>
+     <addaction name="action_circ_axial"/>
+     <addaction name="action_circ_corrcc"/>
+     <addaction name="action_circ_corrcl"/>
+     <addaction name="action_circ_mean"/>
+     <addaction name="action_circ_r"/>
+     <addaction name="action_circ_rayleigh"/>
+     <addaction name="action_circ_vtest"/>
+    </widget>
+    <widget class="QMenu" name="menu_correlation_regression">
+     <property name="title">
+      <string>相关性与回归</string>
+     </property>
+     <addaction name="action_corr"/>
+     <addaction name="action_pairwise_corr"/>
+     <addaction name="action_partial_corr"/>
+     <addaction name="action_pcorr"/>
+     <addaction name="action_rcorr"/>
+     <addaction name="action_distance_corr"/>
+     <addaction name="action_rm_corr"/>
+     <addaction name="action_linear_regression"/>
+     <addaction name="action_logistic_regression"/>
+     <addaction name="action_mediation_analysis"/>
+    </widget>
+    <widget class="QMenu" name="menu_contingency">
+     <property name="title">
+      <string>偶然性</string>
+     </property>
+     <addaction name="action_chi2_independence"/>
+     <addaction name="action_chi2_mcnemar"/>
+     <addaction name="action_dichotomous_crosstab"/>
+    </widget>
+    <widget class="QMenu" name="menu_distribution">
+     <property name="title">
+      <string>分布</string>
+     </property>
+     <addaction name="action_anderson"/>
+     <addaction name="action_gzscore"/>
+     <addaction name="action_homoscedasticity"/>
+     <addaction name="action_normality"/>
+     <addaction name="action_sphericity"/>
+    </widget>
+    <widget class="QMenu" name="menu_effect_size">
+     <property name="title">
+      <string>影响因子</string>
+     </property>
+     <addaction name="action_compute_effsize"/>
+     <addaction name="action_compute_effsize_from_t"/>
+     <addaction name="action_convert_effsize"/>
+     <addaction name="action_compute_esci"/>
+     <addaction name="action_compute_bootci"/>
+    </widget>
+    <widget class="QMenu" name="menu_4">
+     <property name="title">
+      <string>多重比较和事后检验</string>
+     </property>
+     <addaction name="action_pairwise_corr_2"/>
+     <addaction name="action_pairwise_ttests"/>
+     <addaction name="action_pairwise_tukey"/>
+     <addaction name="action_pairwise_gameshowell"/>
+     <addaction name="action_multicomp"/>
+    </widget>
+    <widget class="QMenu" name="menu_multivariate_tests">
+     <property name="title">
+      <string>多元检验</string>
+     </property>
+     <addaction name="action_box_m"/>
+     <addaction name="action_multivariate_normality"/>
+     <addaction name="action_multivariate_ttest"/>
+    </widget>
+    <widget class="QMenu" name="menu_others">
+     <property name="title">
+      <string>其他</string>
+     </property>
+     <addaction name="action_set_default_options"/>
+    </widget>
+    <widget class="QMenu" name="menu_reliablility_consistency">
+     <property name="title">
+      <string>可靠性与一致性</string>
+     </property>
+     <addaction name="action_cronbach_alpha"/>
+     <addaction name="action_intraclass_corr"/>
+    </widget>
+    <widget class="QMenu" name="menu_non_parametric">
+     <property name="title">
+      <string>非参数检验</string>
+     </property>
+     <addaction name="action_cochran"/>
+     <addaction name="action_friedman"/>
+     <addaction name="action_kruskal"/>
+     <addaction name="action_mad"/>
+     <addaction name="action_madmedianrule"/>
+     <addaction name="action_mwu"/>
+     <addaction name="action_wilcoxon"/>
+     <addaction name="action_harrelldavis"/>
+    </widget>
+    <widget class="QMenu" name="menu_plotting">
+     <property name="title">
+      <string>绘图</string>
+     </property>
+     <addaction name="action_plot_blandaltman"/>
+     <addaction name="action_plot_circmean"/>
+     <addaction name="action_plot_paired"/>
+     <addaction name="action_plot_shift"/>
+     <addaction name="action_plot_rm_corr"/>
+     <addaction name="action_qqplot"/>
+    </widget>
+    <widget class="QMenu" name="menu_power_analysis">
+     <property name="title">
+      <string>功率分析</string>
+     </property>
+     <addaction name="action_power_anova"/>
+     <addaction name="action_power_rm_anova"/>
+     <addaction name="action_power_chi2"/>
+     <addaction name="action_power_corr"/>
+     <addaction name="action_power_ttest"/>
+     <addaction name="action_power_ttest2n"/>
+    </widget>
     <addaction name="menu_kernel"/>
-    <addaction name="action_T"/>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
-    <addaction name="action_3"/>
-    <addaction name="action_4"/>
-    <addaction name="action_5"/>
-    <addaction name="action_6"/>
-    <addaction name="action_7"/>
-    <addaction name="action_8"/>
-    <addaction name="action_9"/>
-    <addaction name="action_10"/>
-    <addaction name="action_11"/>
+    <addaction name="menu_anova_ttest"/>
+    <addaction name="menu_bayesian"/>
+    <addaction name="menu_circular"/>
+    <addaction name="menu_contingency"/>
+    <addaction name="menu_correlation_regression"/>
+    <addaction name="menu_distribution"/>
+    <addaction name="menu_effect_size"/>
+    <addaction name="menu_4"/>
+    <addaction name="menu_multivariate_tests"/>
+    <addaction name="menu_non_parametric"/>
+    <addaction name="menu_power_analysis"/>
+    <addaction name="menu_reliablility_consistency"/>
+    <addaction name="menu_plotting"/>
+    <addaction name="menu_others"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_3"/>
@@ -196,100 +341,378 @@
     <string>Pingouin</string>
    </property>
   </action>
-  <action name="action_T">
+  <action name="action_anova">
    <property name="text">
-    <string>方差分析与T检验</string>
+    <string>方差分析</string>
    </property>
    <property name="toolTip">
-    <string>ANOVA and T-test</string>
+    <string>One-way and N-way ANOVA</string>
    </property>
   </action>
-  <action name="action">
+  <action name="action_ancova">
    <property name="text">
-    <string>贝叶斯</string>
+    <string>协方差分析</string>
    </property>
    <property name="toolTip">
-    <string>Bayesian</string>
+    <string>ANCOVA with one or more covariate(s)</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="action_rm_anova">
    <property name="text">
-    <string>圆弧处理</string>
+    <string>重复测量方差分析</string>
    </property>
    <property name="toolTip">
-    <string>Circular</string>
+    <string>One-way and two-way repeated measures ANOVA</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="action_epsilon">
    <property name="text">
-    <string>相关性与回归</string>
-   </property>
-   <property name="toolTip">
-    <string>Correlation and regression</string>
+    <string>Epsilon adjustement factor for repeated measures</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="action_mixed_anova">
    <property name="text">
-    <string>偶然性</string>
-   </property>
-   <property name="toolTip">
-    <string>Contingency</string>
+    <string>Mixed-design (split-plot) ANOVA</string>
    </property>
   </action>
-  <action name="action_5">
+  <action name="action_welch_anova">
    <property name="text">
-    <string>分布</string>
-   </property>
-   <property name="toolTip">
-    <string>Distribution</string>
+    <string>One-way Welch ANOVA</string>
    </property>
   </action>
-  <action name="action_6">
+  <action name="action_tost">
    <property name="text">
-    <string>影响因子</string>
-   </property>
-   <property name="toolTip">
-    <string>Effect sizes</string>
+    <string>Two One-Sided Test (TOST) for equivalence</string>
    </property>
   </action>
-  <action name="action_7">
+  <action name="action_ttest">
    <property name="text">
-    <string>多重比较和事后检验</string>
-   </property>
-   <property name="toolTip">
-    <string>Multiple comparisons and post-hoc tests</string>
+    <string>T-test</string>
    </property>
   </action>
-  <action name="action_8">
+  <action name="action_bayesfactor_binom">
    <property name="text">
-    <string>多元检验</string>
-   </property>
-   <property name="toolTip">
-    <string>Multivariate tests</string>
+    <string>Bayes factor of a binomial test with k successes, n trials and base probability</string>
    </property>
   </action>
-  <action name="action_9">
+  <action name="action_bayesfactor_ttest">
    <property name="text">
-    <string>非参数检验</string>
-   </property>
-   <property name="toolTip">
-    <string>Non-parametric</string>
+    <string>Bayes Factor of a T-test</string>
    </property>
   </action>
-  <action name="action_10">
+  <action name="action_bayesfactor_pearson">
    <property name="text">
-    <string>功率分析</string>
-   </property>
-   <property name="toolTip">
-    <string>Power analysis</string>
+    <string>Bayes Factor of a Pearson correlation</string>
    </property>
   </action>
-  <action name="action_11">
+  <action name="action_convert_angles">
    <property name="text">
-    <string>可靠性与一致性</string>
+    <string>Element-wise conversion of arbitrary-unit circular quantities to radians</string>
    </property>
-   <property name="toolTip">
-    <string>Reliability and consistency</string>
+  </action>
+  <action name="action_circ_axial">
+   <property name="text">
+    <string>Transforms n-axial data to a common scale</string>
+   </property>
+  </action>
+  <action name="action_circ_corrcc">
+   <property name="text">
+    <string>Correlation coefficient between two circular variables</string>
+   </property>
+  </action>
+  <action name="action_circ_corrcl">
+   <property name="text">
+    <string>Correlation coefficient between one circular and one linear variable random variables</string>
+   </property>
+  </action>
+  <action name="action_circ_mean">
+   <property name="text">
+    <string>Mean direction for (binned) circular data</string>
+   </property>
+  </action>
+  <action name="action_circ_r">
+   <property name="text">
+    <string>Mean resultant vector length for circular data</string>
+   </property>
+  </action>
+  <action name="action_circ_rayleigh">
+   <property name="text">
+    <string>Rayleigh test for non-uniformity of circular data</string>
+   </property>
+  </action>
+  <action name="action_circ_vtest">
+   <property name="text">
+    <string>V test for non-uniformity of circular data with a specified mean direction</string>
+   </property>
+  </action>
+  <action name="action_chi2_independence">
+   <property name="text">
+    <string>Chi-squared independence tests between two categorical variables</string>
+   </property>
+  </action>
+  <action name="action_chi2_mcnemar">
+   <property name="text">
+    <string>Performs the exact and approximated versions of McNemar’s test</string>
+   </property>
+  </action>
+  <action name="action_dichotomous_crosstab">
+   <property name="text">
+    <string>Generates a 2x2 contingency table from a pandas.DataFrame that contains only dichotomous entries, which are converted to 0 or 1</string>
+   </property>
+  </action>
+  <action name="action_corr">
+   <property name="text">
+    <string>(Robust) correlation between two variables</string>
+   </property>
+  </action>
+  <action name="action_pairwise_corr">
+   <property name="text">
+    <string>Pairwise (partial) correlations between columns of a pandas dataframe</string>
+   </property>
+  </action>
+  <action name="action_partial_corr">
+   <property name="text">
+    <string>Partial and semi-partial correlation</string>
+   </property>
+  </action>
+  <action name="action_pcorr">
+   <property name="text">
+    <string>Partial correlation matrix (pandas.DataFrame method).</string>
+   </property>
+  </action>
+  <action name="action_rcorr">
+   <property name="text">
+    <string>Correlation matrix of a dataframe with p-values and/or sample size on the upper triangle (pandas.DataFrame method).</string>
+   </property>
+  </action>
+  <action name="action_distance_corr">
+   <property name="text">
+    <string>Distance correlation between two arrays</string>
+   </property>
+  </action>
+  <action name="action_rm_corr">
+   <property name="text">
+    <string>Repeated measures correlation</string>
+   </property>
+  </action>
+  <action name="action_linear_regression">
+   <property name="text">
+    <string>(Multiple) Linear regression</string>
+   </property>
+  </action>
+  <action name="action_logistic_regression">
+   <property name="text">
+    <string>(Multiple) Binary logistic regression</string>
+   </property>
+  </action>
+  <action name="action_mediation_analysis">
+   <property name="text">
+    <string>Mediation analysis using a bias-correct non-parametric bootstrap method</string>
+   </property>
+  </action>
+  <action name="action_anderson">
+   <property name="text">
+    <string>Anderson-Darling test of distribution</string>
+   </property>
+  </action>
+  <action name="action_gzscore">
+   <property name="text">
+    <string>Geometric standard (Z) score</string>
+   </property>
+  </action>
+  <action name="action_homoscedasticity">
+   <property name="text">
+    <string>Test equality of variance</string>
+   </property>
+  </action>
+  <action name="action_normality">
+   <property name="text">
+    <string>Univariate normality test</string>
+   </property>
+  </action>
+  <action name="action_sphericity">
+   <property name="text">
+    <string>Mauchly and JNS test for sphericity</string>
+   </property>
+  </action>
+  <action name="action_compute_effsize">
+   <property name="text">
+    <string>Calculate effect size between two set of observations</string>
+   </property>
+  </action>
+  <action name="action_compute_effsize_from_t">
+   <property name="text">
+    <string>Compute effect size from a T-value</string>
+   </property>
+  </action>
+  <action name="action_convert_effsize">
+   <property name="text">
+    <string>Conversion between effect sizes</string>
+   </property>
+  </action>
+  <action name="action_compute_esci">
+   <property name="text">
+    <string>Parametric confidence intervals around a Cohen d or a correlation coefficient</string>
+   </property>
+  </action>
+  <action name="action_compute_bootci">
+   <property name="text">
+    <string>Bootstrapped confidence intervals of univariate and bivariate functions</string>
+   </property>
+  </action>
+  <action name="action_pairwise_corr_2">
+   <property name="text">
+    <string>Pairwise (partial) correlations between columns of a pandas dataframe</string>
+   </property>
+  </action>
+  <action name="action_pairwise_ttests">
+   <property name="text">
+    <string>Pairwise T-tests</string>
+   </property>
+  </action>
+  <action name="action_pairwise_tukey">
+   <property name="text">
+    <string>Pairwise Tukey-HSD post-hoc test</string>
+   </property>
+  </action>
+  <action name="action_pairwise_gameshowell">
+   <property name="text">
+    <string>Pairwise Games-Howell post-hoc test</string>
+   </property>
+  </action>
+  <action name="action_multicomp">
+   <property name="text">
+    <string>P-values correction for multiple comparisons</string>
+   </property>
+  </action>
+  <action name="action_box_m">
+   <property name="text">
+    <string>Test equality of covariance matrices using the Box’s M test</string>
+   </property>
+  </action>
+  <action name="action_multivariate_normality">
+   <property name="text">
+    <string>Henze-Zirkler multivariate normality test</string>
+   </property>
+  </action>
+  <action name="action_multivariate_ttest">
+   <property name="text">
+    <string>Hotelling T-squared test (= multivariate T-test)</string>
+   </property>
+  </action>
+  <action name="action_set_default_options">
+   <property name="text">
+    <string>Reset Pingouin’s default global options</string>
+   </property>
+  </action>
+  <action name="action_cronbach_alpha">
+   <property name="text">
+    <string>Cronbach’s alpha reliability measure</string>
+   </property>
+  </action>
+  <action name="action_intraclass_corr">
+   <property name="text">
+    <string>Intraclass correlation</string>
+   </property>
+  </action>
+  <action name="action_cochran">
+   <property name="text">
+    <string>Cochran Q test</string>
+   </property>
+  </action>
+  <action name="action_friedman">
+   <property name="text">
+    <string>Friedman test for repeated measurements</string>
+   </property>
+  </action>
+  <action name="action_kruskal">
+   <property name="text">
+    <string>Kruskal-Wallis H-test for independent samples</string>
+   </property>
+  </action>
+  <action name="action_mad">
+   <property name="text">
+    <string>Median Absolute Deviation (MAD) along given axis of an array</string>
+   </property>
+  </action>
+  <action name="action_madmedianrule">
+   <property name="text">
+    <string>Robust outlier detection based on the MAD-median rule</string>
+   </property>
+  </action>
+  <action name="action_mwu">
+   <property name="text">
+    <string>Mann-Whitney U Test (= Wilcoxon rank-sum test)</string>
+   </property>
+  </action>
+  <action name="action_wilcoxon">
+   <property name="text">
+    <string>Wilcoxon signed-rank test</string>
+   </property>
+  </action>
+  <action name="action_harrelldavis">
+   <property name="text">
+    <string>Harrell-Davis robust estimate of the qth quantile(s) of the data</string>
+   </property>
+  </action>
+  <action name="action_plot_blandaltman">
+   <property name="text">
+    <string>Generate a Bland-Altman plot to compare two sets of measurements</string>
+   </property>
+  </action>
+  <action name="action_plot_circmean">
+   <property name="text">
+    <string>Plot the circular mean and vector length of a set of angles on the unit circle</string>
+   </property>
+  </action>
+  <action name="action_plot_paired">
+   <property name="text">
+    <string>Paired plot</string>
+   </property>
+  </action>
+  <action name="action_plot_shift">
+   <property name="text">
+    <string>Shift plot</string>
+   </property>
+  </action>
+  <action name="action_plot_rm_corr">
+   <property name="text">
+    <string>Plot a repeated measures correlation</string>
+   </property>
+  </action>
+  <action name="action_qqplot">
+   <property name="text">
+    <string>Quantile-Quantile plot</string>
+   </property>
+  </action>
+  <action name="action_power_anova">
+   <property name="text">
+    <string>Evaluate power, sample size, effect size or significance level of a one-way balanced ANOVA.</string>
+   </property>
+  </action>
+  <action name="action_power_rm_anova">
+   <property name="text">
+    <string>Evaluate power, sample size, effect size or significance level of a balanced one-way repeated measures ANOVA</string>
+   </property>
+  </action>
+  <action name="action_power_chi2">
+   <property name="text">
+    <string>Evaluate power, sample size, effect size or significance level of chi-squared tests</string>
+   </property>
+  </action>
+  <action name="action_power_corr">
+   <property name="text">
+    <string>Evaluate power, sample size, correlation coefficient or significance level of a correlation test</string>
+   </property>
+  </action>
+  <action name="action_power_ttest">
+   <property name="text">
+    <string>Evaluate power, sample size, effect size or significance level of a one-sample T-test, a paired T-test or an independent two-samples T-test with equal sample sizes</string>
+   </property>
+  </action>
+  <action name="action_power_ttest2n">
+   <property name="text">
+    <string>Evaluate power, effect size or significance level of an independent two-samples T-test with unequal sample sizes</string>
    </property>
   </action>
  </widget>

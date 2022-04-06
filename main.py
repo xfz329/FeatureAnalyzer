@@ -9,11 +9,7 @@ import data.Globalvar as gl
 import pingouin_settings.methods as pm
 from process.task_open import TaskOpen
 from ui.main_basic import Ui_MainWindow
-from ui.subwindow.subwindow_data import SubWindow_Data
-from ui.subwindow.subwindow_logs import SubWindow_Logs
-from ui.subwindow.subwindow_manager import SubwindowManager
-from ui.subwindow.subwindow_plot import SubWindow_Plot
-from ui.subwindow.subwindow_result import SubWindow_Result
+import ui.subwindow as sub
 from utils.logger import Logger
 
 
@@ -25,12 +21,17 @@ class Global_MainWindow(Ui_MainWindow):
         self.log = Logger('fa').get_log()
         self.swm = None
         self.taskOpen = TaskOpen(self.updateWinData,"open")
+        self.m2p = {}               # method_to_set_parameters
+        self.s2d = {}               # subwindows to display
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
+        self.set_m2p()
+        self.set_s2d()
+
         self.menu_5.setToolTipsVisible(True)
         # self.mdiArea.setActivationOrder(QMdiArea.WindowOrder.ActivationHistoryOrder)
-        self.swm = SubwindowManager(self.mdiArea)
+        self.swm = sub.SubwindowManager(self.mdiArea)
         self.action_author.triggered.connect(self.show_author)
         self.action_logs.triggered.connect(self.show_changelogs)
         self.action_open.triggered.connect(self.open)
@@ -40,7 +41,7 @@ class Global_MainWindow(Ui_MainWindow):
         self.action_tileSubWin.triggered.connect(self.mdiArea.tileSubWindows)
         self.action_draw.triggered.connect(self.draw)
         self.create_new_subwindow(self.action_win_data)
-        self.action_T.triggered.connect(self.set_para)
+        self.menu_anova_ttest.triggered.connect(self.show_para_window)
         self.update_statusbar("系统初始化完毕")
 
 
@@ -66,20 +67,6 @@ class Global_MainWindow(Ui_MainWindow):
         from PyQt5.QtWidgets import QMessageBox
         QMessageBox.information(None,"分析内核设置","目前所有统计分析功能均通过Pingouin（0.5.1）完成。Pingouin内部使用了部分SciPy.stats的统计分析功能。其他分析内核功能请期待版本更新。",QMessageBox.Ok)
 
-    def create_new_subwindow(self, action):
-        if action.objectName() == self.action_win_data.objectName():
-            self.swm.add_sub_window(SubWindow_Data)
-            return
-        if action.objectName() == self.action_win_plot.objectName():
-            self.swm.add_sub_window(SubWindow_Plot)
-            return
-        if action.objectName() == self.action_win_log.objectName():
-            self.swm.add_sub_window(SubWindow_Logs)
-            return
-        if action.objectName() == self.action_win_result.objectName():
-            self.swm.add_sub_window(SubWindow_Result)
-            return
-
     def open(self):
         win = self.swm.get_sub_window("Window_Data")
         self.log.info("add data to subwindow "+ win.windowTitle())
@@ -103,9 +90,32 @@ class Global_MainWindow(Ui_MainWindow):
         from process.Draw import Draw
         Draw().draw(winD,winP)
 
-    def set_para(self):
-        self.para =pm.Ui_Ancova_MainWindow(self.swm)
+    def create_new_subwindow(self, action):
+        name = action.objectName()
+        win_type = self.s2d.get(name)
+        self.swm.add_sub_window(win_type)
+
+    def show_para_window(self, action):
+        name = action.objectName()
+        method_UI = self.m2p.get(name)
+        self.para = method_UI(self.swm)
         self.para.show()
+
+    def set_s2d(self):
+        self.s2d.setdefault(self.action_win_data.objectName(), sub.SubWindow_Data)
+        self.s2d.setdefault(self.action_win_plot.objectName(), sub.SubWindow_Plot)
+        self.s2d.setdefault(self.action_win_result.objectName(), sub.SubWindow_Result)
+        self.s2d.setdefault(self.action_win_log.objectName(), sub.SubWindow_Logs)
+
+    def set_m2p(self):
+        # anova and t_test
+        self.m2p.setdefault(self.action_anova.objectName(),pm.Ui_Anova_MainWindow)
+        self.m2p.setdefault(self.action_ancova.objectName(),pm.Ui_Ancova_MainWindow)
+
+
+
+
+
 
 
 
