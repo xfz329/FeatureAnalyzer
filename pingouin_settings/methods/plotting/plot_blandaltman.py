@@ -7,8 +7,6 @@ from PyQt5.QtWidgets import QMessageBox
 
 import pingouin as pg
 from pingouin_settings.parameter_setting.parameter import Ui_Parameter_MainWindow
-import ui.subwindow as sub
-
 
 class Ui_Plot_blandaltman_MainWindow(Ui_Parameter_MainWindow):
     def __init__(self, win_manager):

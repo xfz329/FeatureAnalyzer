@@ -306,6 +306,14 @@
     <string>Ctrl+2</string>
    </property>
   </action>
+  <action name="action_win_plot_m">
+   <property name="text">
+    <string>绘图窗口(Matplot)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+  </action>
   <action name="action_win_log">
    <property name="text">
     <string>日志窗口</string>
@@ -714,14 +722,6 @@
   <action name="action_power_ttest2n">
    <property name="text">
     <string>Evaluate power, effect size or significance level of an independent two-samples T-test with unequal sample sizes</string>
-   </property>
-  </action>
-  <action name="action_win_plot_m">
-   <property name="text">
-    <string>绘图窗口(Matplot)</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+3</string>
    </property>
   </action>
  </widget>

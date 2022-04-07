@@ -41,8 +41,12 @@ class Global_MainWindow(Ui_MainWindow):
         self.action_tileSubWin.triggered.connect(self.mdiArea.tileSubWindows)
         self.action_draw.triggered.connect(self.draw)
         self.create_new_subwindow(self.action_win_data)
+
+        # connect to pingouin parameter window
         self.menu_anova_ttest.triggered.connect(self.show_para_window)
+        self.menu_bayesian.triggered.connect(self.show_para_window)
         self.menu_plotting.triggered.connect(self.show_para_window)
+
         self.update_statusbar("系统初始化完毕")
 
 
@@ -120,6 +124,10 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_tost.objectName(),pm.Ui_Tost_MainWindow)
         self.m2p.setdefault(self.action_ttest.objectName(),pm.Ui_Ttest_MainWindow)
 
+        # bayesian
+        self.m2p.setdefault(self.action_bayesfactor_binom.objectName(),pm.Ui_Bayesfactor_binom_MainWindow)
+        self.m2p.setdefault(self.action_bayesfactor_ttest.objectName(),pm.Ui_Bayesfactor_ttest_MainWindow)
+        self.m2p.setdefault(self.action_bayesfactor_pearson.objectName(),pm.Ui_Bayesfactor_pearson_MainWindow)
 
 
         # plotting
