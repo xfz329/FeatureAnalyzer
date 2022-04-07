@@ -26,6 +26,12 @@ from pingouin_settings.methods.contingency.chi2_independence import *
 from pingouin_settings.methods.contingency.chi2_mcnemar import *
 from pingouin_settings.methods.contingency.dichotomous_crosstab import *
 
+# correlation_regression
+from pingouin_settings.methods.correlation_regression.corr import *
+from pingouin_settings.methods.correlation_regression.pairwise_corr import *
+from pingouin_settings.methods.correlation_regression.partial_corr import *
+from pingouin_settings.methods.correlation_regression.distance_corr import *
+from pingouin_settings.methods.correlation_regression.rm_corr import *
 
 
 # plotting

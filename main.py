@@ -48,6 +48,7 @@ class Global_MainWindow(Ui_MainWindow):
         self.menu_plotting.triggered.connect(self.show_para_window)
         # self.menu_circular.triggered.connect(self.show_para_window)
         self.menu_contingency.triggered.connect(self.show_para_window)
+        self.menu_correlation_regression.triggered.connect(self.show_para_window)
 
         self.update_statusbar("系统初始化完毕")
 
@@ -138,6 +139,12 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_chi2_mcnemar.objectName(),pm.Ui_Chi2_mcnemar_MainWindow)
         self.m2p.setdefault(self.action_dichotomous_crosstab.objectName(),pm.Ui_Dichotomous_crosstab_MainWindow)
 
+        # correlation_regression
+        self.m2p.setdefault(self.action_corr.objectName(),pm.Ui_Corr_MainWindow)
+        self.m2p.setdefault(self.action_pairwise_corr.objectName(),pm.Ui_Pairwise_corr_MainWindow)
+        self.m2p.setdefault(self.action_partial_corr.objectName(),pm.Ui_Partial_corr_MainWindow)
+        self.m2p.setdefault(self.action_distance_corr.objectName(),pm.Ui_Distance_corr_MainWindow)
+        self.m2p.setdefault(self.action_rm_corr.objectName(),pm.Ui_Rm_corr_MainWindow)
 
         # plotting
         self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)

@@ -123,8 +123,6 @@
      <addaction name="action_corr"/>
      <addaction name="action_pairwise_corr"/>
      <addaction name="action_partial_corr"/>
-     <addaction name="action_pcorr"/>
-     <addaction name="action_rcorr"/>
      <addaction name="action_distance_corr"/>
      <addaction name="action_rm_corr"/>
      <addaction name="action_linear_regression"/>

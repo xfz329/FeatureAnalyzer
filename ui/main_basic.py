@@ -289,8 +289,6 @@ class Ui_MainWindow(object):
         self.menu_correlation_regression.addAction(self.action_corr)
         self.menu_correlation_regression.addAction(self.action_pairwise_corr)
         self.menu_correlation_regression.addAction(self.action_partial_corr)
-        self.menu_correlation_regression.addAction(self.action_pcorr)
-        self.menu_correlation_regression.addAction(self.action_rcorr)
         self.menu_correlation_regression.addAction(self.action_distance_corr)
         self.menu_correlation_regression.addAction(self.action_rm_corr)
         self.menu_correlation_regression.addAction(self.action_linear_regression)
