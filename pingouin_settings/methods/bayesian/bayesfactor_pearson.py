@@ -43,7 +43,8 @@ class Ui_Bayesfactor_pearson_MainWindow(Ui_Parameter_MainWindow):
         self.lineEdit_s3.setText("1.0")
 
 
-
+    # need to install mpmath
+    # pip install mpmath
     def start_analyse(self):
         try:
             r = float(self.lineEdit_s1.text())

@@ -46,6 +46,8 @@ class Global_MainWindow(Ui_MainWindow):
         self.menu_anova_ttest.triggered.connect(self.show_para_window)
         self.menu_bayesian.triggered.connect(self.show_para_window)
         self.menu_plotting.triggered.connect(self.show_para_window)
+        # self.menu_circular.triggered.connect(self.show_para_window)
+        self.menu_contingency.triggered.connect(self.show_para_window)
 
         self.update_statusbar("系统初始化完毕")
 
@@ -128,6 +130,13 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_bayesfactor_binom.objectName(),pm.Ui_Bayesfactor_binom_MainWindow)
         self.m2p.setdefault(self.action_bayesfactor_ttest.objectName(),pm.Ui_Bayesfactor_ttest_MainWindow)
         self.m2p.setdefault(self.action_bayesfactor_pearson.objectName(),pm.Ui_Bayesfactor_pearson_MainWindow)
+
+        # circular
+
+        # contingency
+        self.m2p.setdefault(self.action_chi2_independence.objectName(),pm.Ui_Chi2_independence_MainWindow)
+        self.m2p.setdefault(self.action_chi2_mcnemar.objectName(),pm.Ui_Chi2_mcnemar_MainWindow)
+        self.m2p.setdefault(self.action_dichotomous_crosstab.objectName(),pm.Ui_Dichotomous_crosstab_MainWindow)
 
 
         # plotting
