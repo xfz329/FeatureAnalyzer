@@ -79,7 +79,6 @@ class Ui_Distance_corr_MainWindow(Ui_Parameter_MainWindow):
         except Exception:
             QMessageBox.warning(None, "参数设置错误", "n_boot需要被设置成整数，当前已重置为1000。", QMessageBox.Ok)
             seed = None
-        print(seed)
         if seed is not None:
             try:
                 seed = int(seed)

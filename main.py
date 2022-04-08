@@ -45,10 +45,12 @@ class Global_MainWindow(Ui_MainWindow):
         # connect to pingouin parameter window
         self.menu_anova_ttest.triggered.connect(self.show_para_window)
         self.menu_bayesian.triggered.connect(self.show_para_window)
-        self.menu_plotting.triggered.connect(self.show_para_window)
         # self.menu_circular.triggered.connect(self.show_para_window)
         self.menu_contingency.triggered.connect(self.show_para_window)
         self.menu_correlation_regression.triggered.connect(self.show_para_window)
+
+        self.menu_non_parametric.triggered.connect(self.show_para_window)
+        self.menu_plotting.triggered.connect(self.show_para_window)
 
         self.update_statusbar("系统初始化完毕")
 
@@ -145,6 +147,17 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_partial_corr.objectName(),pm.Ui_Partial_corr_MainWindow)
         self.m2p.setdefault(self.action_distance_corr.objectName(),pm.Ui_Distance_corr_MainWindow)
         self.m2p.setdefault(self.action_rm_corr.objectName(),pm.Ui_Rm_corr_MainWindow)
+
+
+        # non_parametric
+        self.m2p.setdefault(self.action_cochran.objectName(),pm.Ui_Cochran_MainWindow)
+        self.m2p.setdefault(self.action_friedman.objectName(),pm.Ui_Friedman_MainWindow)
+        self.m2p.setdefault(self.action_kruskal.objectName(),pm.Ui_Kruskal_MainWindow)
+        self.m2p.setdefault(self.action_mad.objectName(),pm.Ui_Mad_MainWindow)
+        self.m2p.setdefault(self.action_madmedianrule.objectName(),pm.Ui_Madmedianrule_MainWindow)
+        self.m2p.setdefault(self.action_mwu.objectName(),pm.Ui_Mwu_MainWindow)
+        self.m2p.setdefault(self.action_wilcoxon.objectName(),pm.Ui_Wilcoxon_MainWindow)
+        self.m2p.setdefault(self.action_harrelldavis.objectName(),pm.Ui_Harrelldavis_MainWindow)
 
         # plotting
         self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)

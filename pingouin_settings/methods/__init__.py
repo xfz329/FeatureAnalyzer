@@ -34,5 +34,17 @@ from pingouin_settings.methods.correlation_regression.distance_corr import *
 from pingouin_settings.methods.correlation_regression.rm_corr import *
 
 
+
+# non_parametric
+from pingouin_settings.methods.non_parametric.cochran import *
+from pingouin_settings.methods.non_parametric.friedman import *
+from pingouin_settings.methods.non_parametric.kruskal import *
+from pingouin_settings.methods.non_parametric.mad import *
+from pingouin_settings.methods.non_parametric.madmedianrule import *
+from pingouin_settings.methods.non_parametric.mwu import *
+from pingouin_settings.methods.non_parametric.wilcoxon import *
+from pingouin_settings.methods.non_parametric.harrelldavis import *
+
+
 # plotting
 from pingouin_settings.methods.plotting.plot_blandaltman import *
