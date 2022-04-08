@@ -51,6 +51,7 @@ class Global_MainWindow(Ui_MainWindow):
 
         self.menu_non_parametric.triggered.connect(self.show_para_window)
         self.menu_plotting.triggered.connect(self.show_para_window)
+        self.menu_reliablility_consistency.triggered.connect(self.show_para_window)
 
         self.update_statusbar("系统初始化完毕")
 
@@ -163,7 +164,9 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)
 
 
-
+        # reliability_consistency
+        self.m2p.setdefault(self.action_cronbach_alpha.objectName(),pm.Ui_Cronbach_alpha_MainWindow)
+        self.m2p.setdefault(self.action_intraclass_corr.objectName(),pm.Ui_Intraclass_corr_MainWindow)
 
 
 

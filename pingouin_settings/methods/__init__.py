@@ -48,3 +48,8 @@ from pingouin_settings.methods.non_parametric.harrelldavis import *
 
 # plotting
 from pingouin_settings.methods.plotting.plot_blandaltman import *
+
+
+# reliability_consistency
+from pingouin_settings.methods.reliability_consistency.cronbach_alpha import *
+from pingouin_settings.methods.reliability_consistency.intraclass_corr import *
