@@ -51,6 +51,13 @@ from pingouin_settings.methods.non_parametric.harrelldavis import *
 # plotting
 from pingouin_settings.methods.plotting.plot_blandaltman import *
 
+# power_analysis
+from pingouin_settings.methods.power_analysis.power_anova import *
+from pingouin_settings.methods.power_analysis.power_rm_anova import *
+from pingouin_settings.methods.power_analysis.power_chi2 import *
+from pingouin_settings.methods.power_analysis.power_corr import *
+from pingouin_settings.methods.power_analysis.power_ttest import *
+from pingouin_settings.methods.power_analysis.power_ttest2n import *
 
 # reliability_consistency
 from pingouin_settings.methods.reliability_consistency.cronbach_alpha import *

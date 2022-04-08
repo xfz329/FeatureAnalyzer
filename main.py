@@ -53,6 +53,7 @@ class Global_MainWindow(Ui_MainWindow):
 
         self.menu_non_parametric.triggered.connect(self.show_para_window)
         self.menu_plotting.triggered.connect(self.show_para_window)
+        self.menu_power_analysis.triggered.connect(self.show_para_window)
         self.menu_reliablility_consistency.triggered.connect(self.show_para_window)
 
         self.update_statusbar("系统初始化完毕")
@@ -171,6 +172,14 @@ class Global_MainWindow(Ui_MainWindow):
 
         # plotting
         self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)
+
+        # power_analysis
+        self.m2p.setdefault(self.action_power_anova.objectName(),pm.Ui_Power_anova_MainWindow)
+        self.m2p.setdefault(self.action_power_rm_anova.objectName(),pm.Ui_Power_rm_anova_MainWindow)
+        self.m2p.setdefault(self.action_power_chi2.objectName(),pm.Ui_Power_chi2_MainWindow)
+        self.m2p.setdefault(self.action_power_corr.objectName(),pm.Ui_Power_corr_MainWindow)
+        self.m2p.setdefault(self.action_power_ttest.objectName(),pm.Ui_Power_ttest_MainWindow)
+        self.m2p.setdefault(self.action_power_ttest2n.objectName(),pm.Ui_Power_ttest2n_MainWindow)
 
 
         # reliability_consistency
