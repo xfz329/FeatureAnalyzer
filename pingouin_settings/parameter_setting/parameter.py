@@ -88,9 +88,33 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
         win.setText(str(ans))
 
     def show_set_parameters(self, num):
-        discard = 4 - num
-        if discard < 0 or discard >4:
+        discard = 8 - num
+        if discard < 0 or discard > 8:
             self.log.error("num is too large to set parameters")
+            return
+        if discard > 0 :
+            self.lineEdit_s8.setVisible(False)
+            self.label_s8.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.lineEdit_s7.setVisible(False)
+            self.label_s7.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.lineEdit_s6.setVisible(False)
+            self.label_s6.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.lineEdit_s5.setVisible(False)
+            self.label_s5.setVisible(False)
+            discard = discard -1
+        else:
             return
         if discard > 0 :
             self.lineEdit_s4.setVisible(False)
@@ -116,9 +140,33 @@ class Ui_Parameter_MainWindow(Ui_MainWindow):
             return
 
     def show_choose_parameters(self,num):
-        discard = 4 - num
-        if discard < 0 or discard >4:
+        discard = 8 - num
+        if discard < 0 or discard > 8:
             self.log.error("num is too large to set parameters")
+            return
+        if discard > 0 :
+            self.comboBox_p8.setVisible(False)
+            self.label_p8.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.comboBox_p7.setVisible(False)
+            self.label_p7.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.comboBox_p6.setVisible(False)
+            self.label_p6.setVisible(False)
+            discard = discard -1
+        else:
+            return
+        if discard > 0 :
+            self.comboBox_p5.setVisible(False)
+            self.label_p5.setVisible(False)
+            discard = discard -1
+        else:
             return
         if discard > 0 :
             self.comboBox_p4.setVisible(False)

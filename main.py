@@ -4,7 +4,7 @@
 #   created at 19:40 on 2022/3/26
 
 from PyQt5 import QtCore, QtWidgets
-
+from PyQt5.QtWidgets import QMessageBox
 import data.Globalvar as gl
 import pingouin_settings.methods as pm
 from process.task_open import TaskOpen
@@ -111,8 +111,11 @@ class Global_MainWindow(Ui_MainWindow):
     def show_para_window(self, action):
         name = action.objectName()
         method_UI = self.m2p.get(name)
-        self.para = method_UI(self.swm)
-        self.para.show()
+        if method_UI is not None:
+            self.para = method_UI(self.swm)
+            self.para.show()
+        else:
+            QMessageBox.warning(None, "菜单功能尚未实现", "菜单功能尚未实现"+name, QMessageBox.Ok)
 
     def set_s2d(self):
         self.s2d.setdefault(self.action_win_data.objectName(), sub.SubWindow_Data)
