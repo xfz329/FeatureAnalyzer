@@ -49,6 +49,8 @@ class Global_MainWindow(Ui_MainWindow):
         self.menu_contingency.triggered.connect(self.show_para_window)
         self.menu_correlation_regression.triggered.connect(self.show_para_window)
 
+        self.menu_multivariate_tests.triggered.connect(self.show_para_window)
+
         self.menu_non_parametric.triggered.connect(self.show_para_window)
         self.menu_plotting.triggered.connect(self.show_para_window)
         self.menu_reliablility_consistency.triggered.connect(self.show_para_window)
@@ -148,6 +150,10 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_partial_corr.objectName(),pm.Ui_Partial_corr_MainWindow)
         self.m2p.setdefault(self.action_distance_corr.objectName(),pm.Ui_Distance_corr_MainWindow)
         self.m2p.setdefault(self.action_rm_corr.objectName(),pm.Ui_Rm_corr_MainWindow)
+
+        # multivariate_normality
+        self.m2p.setdefault(self.action_box_m.objectName(),pm.Ui_Box_m_MainWindow)
+        self.m2p.setdefault(self.action_multivariate_normality.objectName(),pm.Ui_Multivariate_normality_MainWindow)
 
 
         # non_parametric

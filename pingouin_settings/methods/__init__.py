@@ -33,7 +33,9 @@ from pingouin_settings.methods.correlation_regression.partial_corr import *
 from pingouin_settings.methods.correlation_regression.distance_corr import *
 from pingouin_settings.methods.correlation_regression.rm_corr import *
 
-
+# multivariate_normality
+from pingouin_settings.methods.multivariate_tests.box_m import *
+from pingouin_settings.methods.multivariate_tests.multivariate_normality import *
 
 # non_parametric
 from pingouin_settings.methods.non_parametric.cochran import *
