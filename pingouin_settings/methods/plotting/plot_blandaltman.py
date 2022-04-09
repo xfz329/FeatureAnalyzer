@@ -98,7 +98,8 @@ class Ui_Plot_blandaltman_MainWindow(Ui_Parameter_MainWindow):
             return
         paras.setdefault("dpi", dpi)
         win = self.win_manager.get_sub_window("Window_Matplot")
-        print(win)
+        win.get_canvas().figure.clf()
+        self.log.info("The Window_Matplot is "+str(win))
         ax = win.get_canvas().figure.subplots()
         paras.setdefault("ax", ax)
         pg.plot_blandaltman(*lparas, **paras)

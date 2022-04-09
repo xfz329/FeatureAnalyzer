@@ -50,6 +50,10 @@ from pingouin_settings.methods.non_parametric.harrelldavis import *
 
 # plotting
 from pingouin_settings.methods.plotting.plot_blandaltman import *
+from pingouin_settings.methods.plotting.plot_paired import *
+from pingouin_settings.methods.plotting.plot_shift import *
+from pingouin_settings.methods.plotting.plot_rm_corr import *
+from pingouin_settings.methods.plotting.qqplot import *
 
 # power_analysis
 from pingouin_settings.methods.power_analysis.power_anova import *

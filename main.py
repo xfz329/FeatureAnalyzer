@@ -172,6 +172,10 @@ class Global_MainWindow(Ui_MainWindow):
 
         # plotting
         self.m2p.setdefault(self.action_plot_blandaltman.objectName(),pm.Ui_Plot_blandaltman_MainWindow)
+        self.m2p.setdefault(self.action_plot_paired.objectName(),pm.Ui_Plot_paired_MainWindow)
+        self.m2p.setdefault(self.action_plot_shift.objectName(),pm.Ui_Plot_shift_MainWindow)
+        self.m2p.setdefault(self.action_plot_rm_corr.objectName(),pm.Ui_Plot_rm_corr_MainWindow)
+        self.m2p.setdefault(self.action_qqplot.objectName(),pm.Ui_Qqplot_MainWindow)
 
         # power_analysis
         self.m2p.setdefault(self.action_power_anova.objectName(),pm.Ui_Power_anova_MainWindow)
