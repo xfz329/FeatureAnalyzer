@@ -36,15 +36,22 @@ class Template:
         <dd class= normal>&emsp;&emsp;%(feature)s</dd>
         """
 
-    latest_version = "0.06"
+    latest_version = "0.07"
 
-    latest_date = "2022.04.06"
+    latest_date = "2022.04.10"
 
     def __init__(self):
         self.res = ""
 
     def get(self):
         tab = ""
+
+        f = ""
+        f += Template.feature % dict(feature="完成Pingouin绝大多数模块功能代码的可视化移植")
+        f += Template.feature % dict(feature="调整了pingouin函数的参数设置界面")
+        f += Template.feature % dict(feature="增加了一种新的图像窗口以确保pingouin的图形输出")
+        f += Template.feature % dict(feature="Bug修复")
+        tab += Template.version % dict(num=0.07, date="2022.04.10", features=f)
 
         f = ""
         f += Template.feature % dict(feature="说明文件中增加qtpandas的配置说明")
