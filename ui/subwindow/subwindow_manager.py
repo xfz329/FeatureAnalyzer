@@ -9,6 +9,7 @@ from ui.subwindow.subwindow_qcustomplot import SubWindow_QCustomPlot
 from ui.subwindow.subwindow_logs import SubWindow_Logs
 from ui.subwindow.subwindow_result import SubWindow_Result
 from ui.subwindow.subwindow_matplot import SubWindow_Matplot
+from ui.subwindow.subwindow_pingouin_basic import SubWindow_Pingouin_basic
 
 class SubwindowManager(object):
 
@@ -18,21 +19,25 @@ class SubwindowManager(object):
         gl.set_value("Window_Matplot", "绘图窗口(matplot)")
         gl.set_value("Window_Logs", "日志窗口")
         gl.set_value("Window_Result", "输出窗口")
+        gl.set_value("Window_Pingouin", "Pingouin统计分析窗口")
+        gl.set_value("Win_manager", self)
         self.mdi_area = area
         self.log = Logger("fa").get_log()
         self.mdi_area.subWindowActivated.connect(self.update_actived_window)
 
-    def add_sub_window(self,Type):
-        sub = Type()
-        self.save_sub_window(sub)
-        self.mdi_area.addSubWindow(sub)  # 将新建的子窗口添加到MDI区域
-        sub.show()
+    def add_sub_window(self,f_type,sub_type = None):
+        t = f_type()
+        if isinstance(t,SubWindow_Pingouin_basic):
+            t = sub_type()
+        self.save_sub_window(t)
+        self.mdi_area.addSubWindow(t)  # 将新建的子窗口添加到MDI区域
+        t.show()
 
     def save_sub_window(self,sub_win):
         gl.set_value(sub_win.windowTitle() , sub_win)
         gl.set_value(sub_win.win_type, sub_win)
 
-    def get_sub_window(self,win_type):
+    def get_sub_window(self,win_type,sub_type = None):
         win = gl.get_value(win_type)
         if gl.get_value(win) is None:
             self.log.warning("There's none of "+win+" exits. Creating a new one.")
@@ -46,6 +51,8 @@ class SubwindowManager(object):
                 self.add_sub_window(SubWindow_Logs)
             elif win_type == "Window_Result":
                 self.add_sub_window(SubWindow_Result)
+            elif win_type == "Window_Pingouin":
+                self.add_sub_window(SubWindow_Pingouin_basic,sub_type)
             else:
                 self.log.error("Get a request to create a unknown type("+win+") sub window")
                 return

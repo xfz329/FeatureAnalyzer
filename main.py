@@ -5,11 +5,12 @@
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+
 import data.Globalvar as gl
-import pingouin_settings.methods as pm
+import ui.pingouin_methods as pm
+import ui.subwindow as sub
 from process.task_open import TaskOpen
 from ui.main_basic import Ui_MainWindow
-import ui.subwindow as sub
 from utils.logger import Logger
 
 
@@ -114,9 +115,9 @@ class Global_MainWindow(Ui_MainWindow):
     def show_para_window(self, action):
         name = action.objectName()
         method_UI = self.m2p.get(name)
+        print(method_UI)
         if method_UI is not None:
-            self.para = method_UI(self.swm)
-            self.para.show()
+            self.swm.add_sub_window(sub.SubWindow_Pingouin_basic,method_UI)
         else:
             QMessageBox.warning(None, "菜单功能尚未实现", "菜单功能尚未实现"+name, QMessageBox.Ok)
 

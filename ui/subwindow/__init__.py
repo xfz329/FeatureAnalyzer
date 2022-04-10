@@ -10,3 +10,4 @@ from .subwindow_manager import *
 from .subwindow_qcustomplot import *
 from .subwindow_matplot import *
 from .subwindow_result import *
+from .subwindow_pingouin_basic import *
