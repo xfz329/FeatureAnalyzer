@@ -49,6 +49,8 @@ class Global_MainWindow(Ui_MainWindow):
         self.menu_contingency.triggered.connect(self.show_para_window)
         self.menu_correlation_regression.triggered.connect(self.show_para_window)
 
+        self.menu_effect_size.triggered.connect(self.show_para_window)
+
         self.menu_multivariate_tests.triggered.connect(self.show_para_window)
 
         self.menu_non_parametric.triggered.connect(self.show_para_window)
@@ -154,6 +156,11 @@ class Global_MainWindow(Ui_MainWindow):
         self.m2p.setdefault(self.action_partial_corr.objectName(),pm.Ui_Partial_corr_MainWindow)
         self.m2p.setdefault(self.action_distance_corr.objectName(),pm.Ui_Distance_corr_MainWindow)
         self.m2p.setdefault(self.action_rm_corr.objectName(),pm.Ui_Rm_corr_MainWindow)
+
+        # effect sizes
+        self.m2p.setdefault(self.action_compute_effsize.objectName(),pm.Ui_Compute_effsize_MainWindow)
+        self.m2p.setdefault(self.action_compute_effsize_from_t.objectName(),pm.Ui_Compute_effsize_from_t_MainWindow)
+        self.m2p.setdefault(self.action_convert_effsize.objectName(),pm.Ui_Convert_effsize_MainWindow)
 
         # multivariate_normality
         self.m2p.setdefault(self.action_box_m.objectName(),pm.Ui_Box_m_MainWindow)

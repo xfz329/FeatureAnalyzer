@@ -33,6 +33,11 @@ from pingouin_settings.methods.correlation_regression.partial_corr import *
 from pingouin_settings.methods.correlation_regression.distance_corr import *
 from pingouin_settings.methods.correlation_regression.rm_corr import *
 
+# effect size
+from pingouin_settings.methods.effect_sizes.compute_effsize import *
+from pingouin_settings.methods.effect_sizes.compute_effsize_from_t import *
+from pingouin_settings.methods.effect_sizes.convert_effsize import *
+
 # multivariate_normality
 from pingouin_settings.methods.multivariate_tests.box_m import *
 from pingouin_settings.methods.multivariate_tests.multivariate_normality import *

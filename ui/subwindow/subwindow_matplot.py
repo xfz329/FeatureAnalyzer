@@ -47,8 +47,8 @@ class SubWindow_Matplot(MyQMdiSubWindow):
             xrange = (x_max - x_min) / 10
             if event.button == 'up':
                 ax.set(xlim=(x_min + xrange, x_max - xrange))
-                print('up')
+                self.log.debug("mouse up event in a matplot figure")
             elif event.button == 'down':
                 ax.set(xlim=(x_min - xrange, x_max + xrange))
-                print('down')
+                self.log.debug("mouse down event in a matplot figure")
             self.get_canvas().draw_idle()
