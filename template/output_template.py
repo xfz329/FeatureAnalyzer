@@ -55,6 +55,7 @@ fig = \
     <img src = %(path)s>
 """
 import pandas as pd
+import numpy
 class Template:
 
     def __init__(self):
@@ -63,8 +64,8 @@ class Template:
         self.keys ={}
 
     def get(self):
-        with open("test.html","w",encoding="utf-8") as outfile:
-            outfile.write(self.out)
+        # with open("test.html","w",encoding="utf-8") as outfile:
+        #     outfile.write(self.out)
         return self.out
 
     def add(self, desc, para, ans = None):
@@ -96,6 +97,9 @@ class Template:
         elif type(ans) is pd.core.frame.DataFrame:
             from tabulate import tabulate
             return tabulate(ans, headers="keys", showindex=False, floatfmt=".3f",tablefmt="html")
+        elif type(ans) is float or type(ans) is numpy.float64:
+            return str(ans)
+
 
 
 if __name__ == "__main__":

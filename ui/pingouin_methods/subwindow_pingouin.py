@@ -4,6 +4,7 @@
 #   created at 17:22 on 2022/4/10
 from PyQt5 import QtCore,QtWidgets
 from PyQt5.QtCore import QStringListModel
+from PyQt5.QtWidgets import QMessageBox
 
 import pingouin as pg
 from process.task import Task
@@ -76,6 +77,10 @@ class SubWindow_Pingouin(SubWindow_Pingouin_basic):
         self.desc["finish_time"] = QtCore.QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
         ans = self.task.get_ans()
         self.log.info("get the answer calculated in the thread")
+        if type(ans) is dict and  isinstance(ans["error"], Exception):
+            QMessageBox.warning(None,"参数错误","程序运行出错！以下是错误信息，请检查！\n\t错误类型 : "+str(ans["error"])+"\n\t 错误堆栈 : "+ans["info"],QMessageBox.Ok)
+            return
+        self.log.info(type(ans))
         self.log.info(ans)
         import pandas
         if type(ans) == pandas.core.frame.DataFrame:

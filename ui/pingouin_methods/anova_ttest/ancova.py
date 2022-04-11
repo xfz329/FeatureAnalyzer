@@ -5,6 +5,7 @@
 import pingouin as pg
 
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDateTime
 
 from ui.pingouin_methods import SubWindow_Pingouin
 
@@ -18,6 +19,10 @@ class Ui_Ancova_MainWindow(SubWindow_Pingouin):
         self.label_method.setText("ANCOVA with one or more covariate(s)")
         self.url = "https://pingouin-stats.org/generated/pingouin.ancova.html#pingouin.ancova"
         self.log.info("ancova method!")
+
+        self.desc.setdefault("detail", "ANCOVA with one or more covariate(s)")
+        self.desc.setdefault("brief", "ancova method!")
+        self.desc.setdefault("url", self.url)
 
         self.show_add_parameter(3)
         self.label_l1.setText("独立变量")
@@ -33,27 +38,27 @@ class Ui_Ancova_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
-        paras = {}
-        paras.setdefault("data",self.df)
+        self.paras.clear()
+        self.paras.setdefault("data",self.df)
         dv = self.listView_1.model().stringList()
         if len(dv) != 1:
             QMessageBox.warning(None, "参数设置错误", "独立变量能且只能设置一个。",QMessageBox.Ok)
             return
-        paras.setdefault("dv",dv[0])
+        self.paras.setdefault("dv",dv[0])
         between = self.listView_2.model().stringList()
         if len(between) != 1:
             QMessageBox.warning(None, "参数设置错误", "检测变量能且只能设置一个。",QMessageBox.Ok)
             return
-        paras.setdefault("between",between[0])
+        self.paras.setdefault("between",between[0])
         covar = self.listView_3.model().stringList()
         if len(covar) == 0:
             QMessageBox.warning(None, "参数设置错误", "至少需要设置一个协变量。",QMessageBox.Ok)
             return
-        paras.setdefault("covar", covar)
+        self.paras.setdefault("covar", covar)
         if self.comboBox_p1.currentIndex() == 0:
             effsize = "np2"
         else:
             effsize ="n2"
-        paras.setdefault("effsize",effsize)
-
-        self.task.set_worker(pg.ancova, **paras)
+        self.paras.setdefault("effsize",effsize)
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.task.set_worker(pg.ancova, **self.paras)

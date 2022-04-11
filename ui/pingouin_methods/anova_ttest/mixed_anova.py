@@ -4,6 +4,7 @@
 #   created at 14:57 on 2022/4/6
 
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
@@ -13,12 +14,15 @@ class Ui_Mixed_Anova_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Mixed-design (split-plot) ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.mixed_anova.html#pingouin.mixed_anova"
         self.log.info("mixed_anova method!")
+
+        self.desc.setdefault("detail", "Mixed-design (split-plot) ANOVA")
+        self.desc.setdefault("brief", "mixed_anova method!")
+        self.desc.setdefault("url", self.url)
 
         self.show_add_parameter(4)
         self.label_l1.setText("独立变量")
@@ -39,28 +43,28 @@ class Ui_Mixed_Anova_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
-        paras = {}
-        paras.setdefault("data",self.df)
+        self.paras.clear()
+        self.paras.setdefault("data",self.df)
         dv = self.listView_1.model().stringList()
         if len(dv) != 1:
             QMessageBox.warning(None, "参数设置错误", "独立变量能且只能设置一个。",QMessageBox.Ok)
             return
-        paras.setdefault("dv",dv[0])
+        self.paras.setdefault("dv",dv[0])
         within = self.listView_2.model().stringList()
         if len(within) != 1:
             QMessageBox.warning(None, "参数设置错误", "within变量只能设置为一个或两个。",QMessageBox.Ok)
             return
-        paras.setdefault("within", within[0])
+        self.paras.setdefault("within", within[0])
         subject = self.listView_3.model().stringList()
         if len(subject) != 1:
             QMessageBox.warning(None, "参数设置错误", "subject变量能且只能设置一个。",QMessageBox.Ok)
             return
-        paras.setdefault("subject", subject[0])
+        self.paras.setdefault("subject", subject[0])
         between = self.listView_4.model().stringList()
         if len(between) != 1:
             QMessageBox.warning(None, "参数设置错误", "between变量能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("between", between[0])
+        self.paras.setdefault("between", between[0])
 
         if self.comboBox_p1.currentIndex() == 0:
             effsize = "np2"
@@ -68,12 +72,12 @@ class Ui_Mixed_Anova_MainWindow(SubWindow_Pingouin):
             effsize = "n2"
         else:
             effsize ="ng2"
-        paras.setdefault("effsize",effsize)
+        self.paras.setdefault("effsize",effsize)
 
         if self.comboBox_p2.currentIndex() == 0:
             correction = "auto"
         else:
             correction = True
-        paras.setdefault("correction",correction)
-
-        self.task.set_worker(pg.mixed_anova, **paras)
+        self.paras.setdefault("correction",correction)
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.task.set_worker(pg.mixed_anova, **self.paras)

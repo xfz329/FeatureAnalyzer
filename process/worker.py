@@ -2,6 +2,7 @@
 #   The worker.py in FeatureAnalyzer
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 10:54 on 2022/4/2
+import traceback
 from qtpandas.models.ProgressThread import ProgressWorker
 import time
 from utils.logger import Logger
@@ -23,7 +24,13 @@ class Worker(ProgressWorker):
 
     def run(self):
         self.log.info("task starts at "+time.strftime("%H:%M:%S",time.localtime()))
-        self.ans = self.handle_job(* self.pwargs, ** self.kwargs)
+        try:
+            self.ans = self.handle_job(* self.pwargs, ** self.kwargs)
+        except Exception as e:
+            self.log.error(e)
+            info = traceback.format_exc()
+            self.log.error(info)
+            self.ans = {"error":e,"info":info}
         self.log.info("task finishes at " + time.strftime("%H:%M:%S", time.localtime()))
 
     def handle_job(self, * pwargs, ** kwargs):

@@ -14,13 +14,15 @@ class Ui_Tost_MainWindow(SubWindow_Pingouin):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
         self.single_y = False
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Two One-Sided Test (TOST) for equivalence")
         self.url = "https://pingouin-stats.org/generated/pingouin.tost.html#pingouin.tost"
         self.log.info("tost method!")
 
+        self.desc.setdefault("detail", "Two One-Sided Test (TOST) for equivalence")
+        self.desc.setdefault("brief", "tost method!")
+        self.desc.setdefault("url", self.url)
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -47,6 +49,7 @@ class Ui_Tost_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
+        self.paras.clear()
         xv = self.listView_1.model().stringList()
         if len(xv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
@@ -66,29 +69,30 @@ class Ui_Tost_MainWindow(SubWindow_Pingouin):
                 QMessageBox.warning(None, "参数设置错误", "y需要被设置成float类型的数值。", QMessageBox.Ok)
                 return
 
-        lparas = (x,y)
-        paras = {}
+        self.paras.setdefault("x", x)
+        self.paras.setdefault("y", y)
 
         if self.comboBox_p2.currentIndex() == 0:
             paired = False
         else:
             paired = True
-        paras.setdefault("paired",paired)
+        self.paras.setdefault("paired",paired)
 
         if self.comboBox_p3.currentIndex() == 0:
             correction = False
         else:
             correction = "auto"
-        paras.setdefault("correction",correction)
+        self.paras.setdefault("correction",correction)
 
         try:
             bound = float(self.lineEdit_s2.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "bound需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("bound", bound)
-
-        self.task.set_worker(pg.tost, *lparas, **paras)
+        self.paras.setdefault("bound", bound)
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.task.set_worker(pg.tost, **self.paras)
 
     def dataframe_clumn_2_list(self, column):
         llist = self.df[column].values.tolist()

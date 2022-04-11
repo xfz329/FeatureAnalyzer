@@ -14,13 +14,15 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
         self.single_y = False
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("T-test")
         self.url = "https://pingouin-stats.org/generated/pingouin.ttest.html#pingouin.ttest"
         self.log.info("ttest method!")
 
+        self.desc.setdefault("detail", "T-test")
+        self.desc.setdefault("brief", "ttest method!")
+        self.desc.setdefault("url", self.url)
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -33,8 +35,8 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
         self.comboBox_p1.currentIndexChanged.connect(self.adjustY)
 
         self.label_p2.setText("paired")
-        self.comboBox_p2.addItem("否")
-        self.comboBox_p2.addItem("是")
+        self.comboBox_p2.addItem("False")
+        self.comboBox_p2.addItem("True")
 
         self.label_p3.setText("alternative")
         self.comboBox_p3.addItem("two-sided")
@@ -43,8 +45,8 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
 
         self.label_p4.setText("修正")
         self.comboBox_p4.addItem("auto")
-        self.comboBox_p4.addItem("是")
-        self.comboBox_p4.addItem("否")
+        self.comboBox_p4.addItem("True")
+        self.comboBox_p4.addItem("False")
 
         self.show_set_parameters(3)
         self.label_s1.setText("变量y")
@@ -56,6 +58,7 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
+        self.paras.clear()
         xv = self.listView_1.model().stringList()
         if len(xv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
@@ -75,8 +78,8 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
                 QMessageBox.warning(None, "参数设置错误", "y需要被设置成float类型的数值。", QMessageBox.Ok)
                 return
 
-        lparas = (x,y)
-        paras = {}
+        self.paras.setdefault("x",x)
+        self.paras.setdefault("y",y)
 
         if self.comboBox_p2.currentIndex() == 0:
             paired = "auto"
@@ -84,31 +87,26 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
             paired = True
         else:
             paired = False
-        paras.setdefault("paired",paired)
-
-        if self.comboBox_p3.currentIndex() == 0:
-            alternative = "two-sided"
-        elif self.comboBox_p3.currentIndex() == 1:
-            alternative = "greater"
-        else:
-            alternative = "less"
-        paras.setdefault("alternative",alternative)
+        self.paras.setdefault("paired",paired)
+        self.paras.setdefault("alternative",self.comboBox_p3.currentText())
+        self.paras.setdefault("correction",self.comboBox_p4.currentText())
 
         try:
             r = float(self.lineEdit_s2.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "r需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("r", r)
+        self.paras.setdefault("r", r)
 
         try:
             confidence = float(self.lineEdit_s3.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "confidence需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("confidence", confidence)
-
-        self.task.set_worker(pg.ttest, *lparas, **paras)
+        self.paras.setdefault("confidence", confidence)
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.task.set_worker(pg.ttest, **self.paras)
 
     def dataframe_clumn_2_list(self, column):
         llist = self.df[column].values.tolist()
