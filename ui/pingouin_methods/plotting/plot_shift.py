@@ -2,10 +2,14 @@
 #   The plot_shift.py in FeatureAnalyzer
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 21:50 on 2022/4/9
+
+import os
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
+import data.Globalvar as gl
 
 class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
     def __init__(self):
@@ -18,6 +22,9 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
         self.url = "https://pingouin-stats.org/generated/pingouin.plot_shift.html#pingouin.plot_shift"
         self.log.info("plot_shift method!")
 
+        self.desc.setdefault("detail", "Shift plot")
+        self.desc.setdefault("brief", "plot_shift method!")
+        self.desc.setdefault("url", self.url)
 
         self.show_add_parameter(2)
         self.label_l1.setText("x")
@@ -46,29 +53,29 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
-        paras = {}
+        self.paras.clear()
         x = self.listView_1.model().stringList()
         if len(x) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("x",self.df[x[0]])
+        self.paras.setdefault("x",self.df[x[0]])
 
         y = self.listView_2.model().stringList()
         if len(y) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量y能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("y", self.df[y[0]])
+        self.paras.setdefault("y", self.df[y[0]])
 
-        paras.setdefault("paired",self.comboBox_p1.currentIndex()==0)
-        paras.setdefault("show_median",self.comboBox_p2.currentIndex()==0)
-        paras.setdefault("violin",self.comboBox_p3.currentIndex()==0)
+        self.paras.setdefault("paired",self.comboBox_p1.currentIndex()==0)
+        self.paras.setdefault("show_median",self.comboBox_p2.currentIndex()==0)
+        self.paras.setdefault("violin",self.comboBox_p3.currentIndex()==0)
 
         try:
             n_boot = int(self.lineEdit_s1.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "n_boot需要被设置成int类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("n_boot", n_boot)
+        self.paras.setdefault("n_boot", n_boot)
 
         try:
             percentiles = eval(self.lineEdit_s2.text())
@@ -78,14 +85,14 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
         if type(percentiles) is not list:
             QMessageBox.warning(None, "参数设置错误", "percentiles需要被设置成list类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("percentiles", percentiles)
+        self.paras.setdefault("percentiles", percentiles)
 
         try:
             ci = float(self.lineEdit_s3.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "ci需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("ci", ci)
+        self.paras.setdefault("ci", ci)
 
         try:
             seed = eval(self.lineEdit_s4.text())
@@ -96,32 +103,23 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
             if type(seed) is not int:
                 QMessageBox.warning(None, "参数设置错误", "seed需要被设置成None或int类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("seed", seed)
+        self.paras.setdefault("seed", seed)
 
         # import numpy as np
         # import pingouin as pg
         # np.random.seed(42)
         # x = np.random.normal(5.5, 2, 50)
         # y = np.random.normal(6, 1.5, 50)
-        # paras.setdefault("x", x)
-        # paras.setdefault("y", y)
-        fig = pg.plot_shift(**paras)
+        # self.paras.setdefault("x", x)
+        # self.paras.setdefault("y", y)
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        fig = pg.plot_shift(**self.paras)
 
-        win = self.win_manager.get_sub_window("Window_Matplot")
+        win = gl.get_value("Win_manager").get_sub_window("Window_Matplot")
         self.log.info("The Window_Matplot is " + str(win))
         win.reset_canvas(fig)
-        self.info_analyse_finished()
-
-    def info_analyse_finished(self):
-        # TODO
-        self.log.info("get the answer calculated in the thread")
-        ans = self.task.get_ans()
-        self.log.info(ans)
-        import pandas
-        if type(ans) == pandas.core.frame.DataFrame:
-            ans.rename(columns=self.columns, inplace=True)
-            ans = ans.round(3)
-            self.log.info(ans)
-        win = self.win_manager.get_sub_window("Window_Result")
-        print(win)
-        win.setText(str(ans))
+        name = "Fig_" + QDateTime.currentDateTime().toString("yyMMdd_HHmmss") + ".jpg"
+        full_name = os.path.join(gl.get_value("FIG_PATH"), name)
+        win.get_canvas().figure.savefig(full_name)
+        self.desc['path'] = full_name
+        self.info_draw_finished()

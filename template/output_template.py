@@ -23,8 +23,8 @@ tmp = \
 static = \
 """ <h1> %(head)s </h1>
     <p>  %(desc)s </p>
-    <p>  %(s_time)s </p>
-    <p>  %(e_time)s </p>
+    <p>  命令开始时间 %(s_time)s </p>
+    <p>  命令结束时间 %(e_time)s </p>
     <p>  %(duration)s </p>
     <dt> 入口参数  </dt>
     <dd>
