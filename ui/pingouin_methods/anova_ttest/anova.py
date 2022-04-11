@@ -4,6 +4,7 @@
 #   created at 19:02 on 2022/4/2
 
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
@@ -18,6 +19,10 @@ class Ui_Anova_MainWindow(SubWindow_Pingouin):
         self.label_method.setText("One-way and N-way ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.anova.html#pingouin.anova"
         self.log.info("anova method!")
+
+        self.desc.setdefault("detail", "One-way and N-way ANOVA")
+        self.desc.setdefault("brief", "anova method!")
+        self.desc.setdefault("url",self.url)
 
         self.show_add_parameter(2)
         self.label_l1.setText("独立变量")
@@ -39,24 +44,24 @@ class Ui_Anova_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
-        paras = {}
-        paras.setdefault("data",self.df)
+        self.paras.clear()
+        self.paras.setdefault("data",self.df)
         dv = self.listView_1.model().stringList()
         if len(dv) != 1:
             QMessageBox.warning(None, "参数设置错误", "独立变量能且只能设置一个。",QMessageBox.Ok)
             return
-        paras.setdefault("dv",dv[0])
+        self.paras.setdefault("dv",dv[0])
         between = self.listView_2.model().stringList()
         if len(between) == 0:
             QMessageBox.warning(None, "参数设置错误", "至少需要设置一个检测变量。",QMessageBox.Ok)
             return
-        paras.setdefault("between",between)
-        paras.setdefault("ss_type",self.comboBox_p1.currentIndex()+1)
-        paras.setdefault("detailed",self.comboBox_p2.currentIndex()==0)
+        self.paras.setdefault("between",between)
+        self.paras.setdefault("ss_type",self.comboBox_p1.currentText())
+        self.paras.setdefault("detailed",self.comboBox_p2.currentIndex()==0)
         if self.comboBox_p3.currentIndex() == 0:
             effsize = "np2"
         else:
             effsize ="n2"
-        paras.setdefault("effsize",effsize)
-
-        self.task.set_worker(pg.anova, **paras)
+        self.paras.setdefault("effsize",effsize)
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.task.set_worker(pg.anova, **self.paras)

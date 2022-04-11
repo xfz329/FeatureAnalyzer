@@ -6,7 +6,7 @@ import os, sys
 BASE_DIR = Path(__file__).resolve().parent.parent
 print(BASE_DIR)
 
-LOG_PATH = LOG_PATH=os.path.join(BASE_DIR,'log')
+LOG_PATH = os.path.join(BASE_DIR,'log')
 print(LOG_PATH)
 if not os.path.exists(LOG_PATH):
     os.makedirs(LOG_PATH)

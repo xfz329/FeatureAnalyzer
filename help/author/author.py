@@ -4,9 +4,10 @@
 #   created at 19:44 on 2022/3/26
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
+
 from help.author.author_basic import Ui_MainWindow
-from help.author.author_template import Template
+from template.author_template import Template
 
 
 class Ui_Author_MainWindow(Ui_MainWindow):

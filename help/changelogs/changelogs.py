@@ -4,8 +4,9 @@
 #   created at 13:41 on 2022/3/27
 
 from PyQt5 import QtCore
+
 from help.changelogs.changelogs_basic import Ui_MainWindow
-from help.changelogs.changelogs_template import Template
+from template.changelogs_template import Template
 
 
 class Ui_Changelogs_MainWindow(Ui_MainWindow):

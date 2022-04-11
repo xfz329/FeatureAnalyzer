@@ -34,9 +34,6 @@ class SubWindow_Result(MyQMdiSubWindow):
         sizePolicy.setHeightForWidth(label.sizePolicy().hasHeightForWidth())
         label.setSizePolicy(sizePolicy)
 
-        from help.author.author_template import Template
-        label.setText(Template().get())
-
         formLayout = QtWidgets.QFormLayout(scrollAreaWidgetContents)
         formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, label)
 
@@ -47,5 +44,4 @@ class SubWindow_Result(MyQMdiSubWindow):
         self.label = label
 
     def setText(self,s):
-        temp = self.label.text()
-        self.label.setText(temp+s)
+        self.label.setText(s)

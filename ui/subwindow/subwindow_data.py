@@ -4,6 +4,9 @@
 #   created at 16:44 on 2022/3/31
 
 from PyQt5.QtWidgets import QMessageBox
+from qtpandas.views.DataTableView import DataTableWidget
+from qtpandas.models.DataFrameModel import DataFrameModel
+import  pandas as pd
 from ui.subwindow.myqmidsubwindow import MyQMdiSubWindow
 from data import Globalvar as gl
 
@@ -15,13 +18,12 @@ class SubWindow_Data(MyQMdiSubWindow):
         SubWindow_Data.count += 1
         self.setWindowTitle(self.generate_title(SubWindow_Data.count))
 
-        from qtpandas.views.DataTableView import DataTableWidget
-        from qtpandas.models.DataFrameModel import DataFrameModel
-
         widget = DataTableWidget()
         widget.tableView.setSortingEnabled(False)
         model = DataFrameModel()
         widget.setViewModel(model)
+        df = pd.DataFrame(columns=['A', 'B', 'C', 'D'], index= range(1,4))
+        model.setDataFrame(df)
 
         self.setWidget(widget)
 

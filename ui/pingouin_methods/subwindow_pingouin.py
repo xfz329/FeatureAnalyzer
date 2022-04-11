@@ -6,7 +6,6 @@ from PyQt5 import QtCore,QtWidgets
 from PyQt5.QtCore import QStringListModel
 
 import pingouin as pg
-from data import Globalvar as gl
 from process.task import Task
 from ui.subwindow.subwindow_pingouin_basic import SubWindow_Pingouin_basic
 from data import Globalvar as gl
@@ -55,6 +54,8 @@ class SubWindow_Pingouin(SubWindow_Pingouin_basic):
         self.task = Task(self.info_analyse_finished, "statistic")
 
         self.df = None
+        self.paras = {}
+        self.desc = {}
 
         self.url = None
         self.columns = {}
@@ -72,16 +73,26 @@ class SubWindow_Pingouin(SubWindow_Pingouin_basic):
         QDesktopServices.openUrl(QUrl(self.url))
 
     def info_analyse_finished(self):
-        self.log.info("get the answer calculated in the thread")
+        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
         ans = self.task.get_ans()
+        self.log.info("get the answer calculated in the thread")
         self.log.info(ans)
         import pandas
         if type(ans) == pandas.core.frame.DataFrame:
             ans.rename(columns=self.columns, inplace=True)
-            ans = ans.round(3)
-            self.log.info(ans)
         win = gl.get_value("Win_manager").get_sub_window("Window_Result")
-        win.setText(str(ans))
+        output = gl.get_value("output")
+        output.add(self.desc,self.paras,ans)
+        win.setText(output.get())
+        self.log.info("finished updating")
+
+    def info_draw_finished(self):
+        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        win = gl.get_value("Win_manager").get_sub_window("Window_Result")
+        output = gl.get_value("output")
+        output.add(self.desc,self.paras)
+        win.setText(output.get())
+        self.log.info("finished drawing")
 
     def show_set_parameters(self, num):
         discard = 8 - num

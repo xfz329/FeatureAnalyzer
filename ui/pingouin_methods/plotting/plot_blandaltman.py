@@ -3,10 +3,13 @@
 #   created by Jiang Feng(silencejiang@zju.edu.cn)
 #   created at 19:25 on 2022/4/6
 
+import os
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
+import data.Globalvar as gl
 
 class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
     def __init__(self):
@@ -18,6 +21,10 @@ class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
         self.label_method.setText("Generate a Bland-Altman plot to compare two sets of measurements")
         self.url = "https://pingouin-stats.org/generated/pingouin.plot_blandaltman.html#pingouin.plot_blandaltman"
         self.log.info("plot_blandaltman method!")
+
+        self.desc.setdefault("detail", "Generate a Bland-Altman plot to compare two sets of measurements")
+        self.desc.setdefault("brief", "plot_blandaltman method!")
+        self.desc.setdefault("url",self.url)
 
 
         self.show_add_parameter(2)
@@ -45,6 +52,7 @@ class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
+        self.paras.clear()
         xv = self.listView_1.model().stringList()
         if len(xv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
@@ -56,8 +64,8 @@ class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "变量y能且只能设置一个。", QMessageBox.Ok)
             return
         y = self.df[yv[0]]
-        lparas = (x, y)
-        paras = {}
+        self.paras.setdefault("x",x)
+        self.paras.setdefault("y",y)
 
         if self.comboBox_p1.currentIndex() == 0:
             xaxis = "mean"
@@ -65,22 +73,22 @@ class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
             xaxis = "x"
         else:
             xaxis = "y"
-        paras.setdefault("xaxis", xaxis)
-        paras.setdefault("annotate", self.comboBox_p2.currentIndex() == 0)
+        self.paras.setdefault("xaxis", xaxis)
+        self.paras.setdefault("annotate", self.comboBox_p2.currentIndex() == 0)
 
         try:
             agreement = float(self.lineEdit_s1.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "agreement需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("agreement", agreement)
+        self.paras.setdefault("agreement", agreement)
 
         try:
             confidence = float(self.lineEdit_s2.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "confidence需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("confidence", confidence)
+        self.paras.setdefault("confidence", confidence)
 
         try:
             scatter_kws = eval(self.lineEdit_s3.text())
@@ -90,34 +98,25 @@ class Ui_Plot_blandaltman_MainWindow(SubWindow_Pingouin):
         if type(scatter_kws) is not dict:
             QMessageBox.warning(None, "参数设置错误", "scatter_kws需要被设置成dict类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("scatter_kws", scatter_kws)
+        self.paras.setdefault("scatter_kws", scatter_kws)
 
         try:
             dpi = int(self.lineEdit_s4.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "dpi需要被设置成int类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("dpi", dpi)
-        win = self.win_manager.get_sub_window("Window_Matplot")
+        self.paras.setdefault("dpi", dpi)
+        win = gl.get_value("Win_manager").get_sub_window("Window_Matplot")
         win.get_canvas().figure.clf()
         self.log.info("The Window_Matplot is "+str(win))
         ax = win.get_canvas().figure.subplots()
-        paras.setdefault("ax", ax)
-        pg.plot_blandaltman(*lparas, **paras)
+        self.paras.setdefault("ax", ax)
+        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        pg.plot_blandaltman(**self.paras)
         win.get_canvas().draw()
         win.get_canvas().flush_events()
-        self.info_analyse_finished()
-
-    def info_analyse_finished(self):
-        # TODO
-        self.log.info("get the answer calculated in the thread")
-        ans = self.task.get_ans()
-        self.log.info(ans)
-        import pandas
-        if type(ans) == pandas.core.frame.DataFrame:
-            ans.rename(columns=self.columns, inplace=True)
-            ans = ans.round(3)
-            self.log.info(ans)
-        win = self.win_manager.get_sub_window("Window_Result")
-        print(win)
-        win.setText(str(ans))
+        name = "Fig_" + QDateTime.currentDateTime().toString("yyMMdd_HHmmss")+".jpg"
+        full_name = os.path.join(gl.get_value("FIG_PATH"),name)
+        win.get_canvas().figure.savefig(full_name)
+        self.desc['path'] = full_name
+        self.info_draw_finished()

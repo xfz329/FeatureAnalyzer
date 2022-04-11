@@ -12,6 +12,7 @@ import ui.subwindow as sub
 from process.task_open import TaskOpen
 from ui.main_basic import Ui_MainWindow
 from utils.logger import Logger
+from template.output_template import Template
 
 
 class Global_MainWindow(Ui_MainWindow):
@@ -24,6 +25,9 @@ class Global_MainWindow(Ui_MainWindow):
         self.taskOpen = TaskOpen(self.updateWinData,"open")
         self.m2p = {}               # method_to_set_parameters
         self.s2d = {}               # subwindows to display
+        temp = Template()
+        gl.set_value("output", temp)
+        self.set_figure_path()
 
     def setupUi(self,MainWindow):
         super().setupUi(MainWindow)
@@ -61,6 +65,14 @@ class Global_MainWindow(Ui_MainWindow):
 
         self.update_statusbar("系统初始化完毕")
 
+    def set_figure_path(self):
+        import os
+        from pathlib import Path
+        BASE_DIR = Path(__file__).resolve().parent
+        FIG_PATH = os.path.join(BASE_DIR, 'figures')
+        if not os.path.exists(FIG_PATH):
+            os.makedirs(FIG_PATH)
+        gl.set_value("FIG_PATH", FIG_PATH)
 
     def show_author(self):
         from help.author import author
@@ -115,7 +127,6 @@ class Global_MainWindow(Ui_MainWindow):
     def show_para_window(self, action):
         name = action.objectName()
         method_UI = self.m2p.get(name)
-        print(method_UI)
         if method_UI is not None:
             self.swm.add_sub_window(sub.SubWindow_Pingouin_basic,method_UI)
         else:
