@@ -36,15 +36,23 @@ class Template:
         <dd class= normal>&emsp;&emsp;%(feature)s</dd>
         """
 
-    latest_version = "0.07"
+    latest_version = "0.08"
 
-    latest_date = "2022.04.10"
+    latest_date = "2022.04.12"
 
     def __init__(self):
         self.res = ""
 
     def get(self):
         tab = ""
+
+        f = ""
+        f += Template.feature % dict(feature="将进行统计时弹出对话框改成内部subwindow")
+        f += Template.feature % dict(feature="增加了pingouin命令运行结果更新至输出窗口")
+        f += Template.feature % dict(feature="增加了pingouin命令运行异常的提示信息，确保程序不会直接退出")
+        f += Template.feature % dict(feature="暂时禁用日志输出界面")
+        f += Template.feature % dict(feature="Bug修复")
+        tab += Template.version % dict(num=0.08, date="2022.04.12", features=f)
 
         f = ""
         f += Template.feature % dict(feature="完成Pingouin绝大多数模块功能代码的可视化移植")

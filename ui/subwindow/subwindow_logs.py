@@ -34,8 +34,8 @@ class SubWindow_Logs(MyQMdiSubWindow):
         sizePolicy.setHeightForWidth(label.sizePolicy().hasHeightForWidth())
         label.setSizePolicy(sizePolicy)
 
-        from template.changelogs_template import Template
-        label.setText(Template().get())
+        # from template.changelogs_template import Template
+        # label.setText(Template().get())
 
         formLayout = QtWidgets.QFormLayout(scrollAreaWidgetContents)
         formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, label)
