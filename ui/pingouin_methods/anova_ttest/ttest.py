@@ -18,11 +18,10 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("T-test")
         self.url = "https://pingouin-stats.org/generated/pingouin.ttest.html#pingouin.ttest"
-        self.log.info("ttest method!")
-
-        self.desc.setdefault("detail", "T-test")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "ttest method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -104,8 +103,9 @@ class Ui_Ttest_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "confidence需要被设置成float类型的数值。", QMessageBox.Ok)
             return
         self.paras.setdefault("confidence", confidence)
+
         from PyQt5.QtCore import QDateTime
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.ttest, **self.paras)
 
     def dataframe_clumn_2_list(self, column):

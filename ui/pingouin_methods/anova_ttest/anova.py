@@ -4,7 +4,6 @@
 #   created at 19:02 on 2022/4/2
 
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
@@ -18,11 +17,10 @@ class Ui_Anova_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("One-way and N-way ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.anova.html#pingouin.anova"
-        self.log.info("anova method!")
-
-        self.desc.setdefault("detail", "One-way and N-way ANOVA")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "anova method!")
         self.desc.setdefault("url",self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("独立变量")
@@ -63,5 +61,6 @@ class Ui_Anova_MainWindow(SubWindow_Pingouin):
         else:
             effsize ="n2"
         self.paras.setdefault("effsize",effsize)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.anova, **self.paras)

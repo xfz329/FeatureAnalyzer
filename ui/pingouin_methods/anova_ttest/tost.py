@@ -18,11 +18,10 @@ class Ui_Tost_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("Two One-Sided Test (TOST) for equivalence")
         self.url = "https://pingouin-stats.org/generated/pingouin.tost.html#pingouin.tost"
-        self.log.info("tost method!")
-
-        self.desc.setdefault("detail", "Two One-Sided Test (TOST) for equivalence")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "tost method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -90,8 +89,9 @@ class Ui_Tost_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "bound需要被设置成float类型的数值。", QMessageBox.Ok)
             return
         self.paras.setdefault("bound", bound)
+
         from PyQt5.QtCore import QDateTime
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.tost, **self.paras)
 
     def dataframe_clumn_2_list(self, column):

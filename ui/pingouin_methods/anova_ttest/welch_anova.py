@@ -17,11 +17,10 @@ class Ui_Welch_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("One-way Welch ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.welch_anova.html#pingouin.welch_anova"
-        self.log.info("welch_anova method!")
-
-        self.desc.setdefault("detail", "One-way Welch ANOVA")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "welch_anova method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("独立变量")
@@ -44,6 +43,7 @@ class Ui_Welch_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "between变量能且只能设置一个。",QMessageBox.Ok)
             return
         self.paras.setdefault("between",between[0])
+
         from PyQt5.QtCore import QDateTime
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.welch_anova, **self.paras)

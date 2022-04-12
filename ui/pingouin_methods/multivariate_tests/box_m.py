@@ -12,12 +12,14 @@ class Ui_Box_m_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
-        self.label_method.setText("Henze-Zirkler multivariate normality test")
+        self.label_method.setText("Test equality of covariance matrices using the Box’s M test.")
         self.url = "https://pingouin-stats.org/generated/pingouin.box_m.html#pingouin.box_m"
-        self.log.info("box_m method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "box_m method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("dvs")
@@ -31,14 +33,13 @@ class Ui_Box_m_MainWindow(SubWindow_Pingouin):
 
     def start_analyse(self):
         # TODO unchecked function
-        lparas =()
-        paras = {}
+        self.paras.clear()
 
         dvs = self.listView_1.model().stringList()
-        paras.setdefault("dvs",dvs)
+        self.paras.setdefault("dvs",dvs)
 
         group = self.listView_2.model().stringList()
-        paras.setdefault("group", group[0])
+        self.paras.setdefault("group", group[0])
 
         try:
             alpha =float(self.lineEdit_s1.text())
@@ -51,5 +52,8 @@ class Ui_Box_m_MainWindow(SubWindow_Pingouin):
                 alpha = 0.001
         else:
             alpha = 0.001
-        paras.setdefault("alpha",alpha)
-        self.task.set_worker(pg.box_m, *lparas, **paras)
+        self.paras.setdefault("alpha",alpha)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.box_m, **self.paras)

@@ -13,12 +13,14 @@ class Ui_Harrelldavis_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Harrell-Davis robust estimate of the qth quantile(s) of the data")
         self.url = "https://pingouin-stats.org/generated/pingouin.harrelldavis.html#pingouin.harrelldavis"
-        self.log.info("harrelldavis method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "harrelldavis method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(1)
         self.label_l1.setText("x")
@@ -35,14 +37,14 @@ class Ui_Harrelldavis_MainWindow(SubWindow_Pingouin):
 
     def start_analyse(self):
         # TODO 2D
-        paras = {}
+        self.paras.clear()
         x = self.listView_1.model().stringList()
         if len(x) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("x",self.df[x[0]])
+        self.paras.setdefault("x",self.df[x[0]])
 
-        paras.setdefault("axis", self.comboBox_p1.currentIndex()-1)
+        self.paras.setdefault("axis", self.comboBox_p1.currentIndex()-1)
 
         try:
             quantile = eval(self.lineEdit_s1.text())
@@ -63,5 +65,8 @@ class Ui_Harrelldavis_MainWindow(SubWindow_Pingouin):
                     break
         else:
             quantile = 0.5
-        paras.setdefault("quantile", quantile)
-        self.task.set_worker(pg.harrelldavis, **paras)
+        self.paras.setdefault("quantile", quantile)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.harrelldavis, **self.paras)

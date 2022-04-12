@@ -13,12 +13,14 @@ class Ui_Multivariate_normality_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Henze-Zirkler multivariate normality test")
         self.url = "https://pingouin-stats.org/generated/pingouin.multivariate_normality.html#pingouin.multivariate_normality"
-        self.log.info("multivariate_normality method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "multivariate_normality method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(1)
         self.label_l1.setText("X")
@@ -30,11 +32,10 @@ class Ui_Multivariate_normality_MainWindow(SubWindow_Pingouin):
         self.lineEdit_s1.setText("0.05")
 
     def start_analyse(self):
-        lparas =()
-        paras = {}
+        self.paras.clear()
 
         x = self.listView_1.model().stringList()
-        paras.setdefault("X",self.df[x])
+        self.paras.setdefault("X",self.df[x])
 
         try:
             alpha =float(self.lineEdit_s1.text())
@@ -47,5 +48,8 @@ class Ui_Multivariate_normality_MainWindow(SubWindow_Pingouin):
                 alpha = 0.05
         else:
             alpha =0.05
-        paras.setdefault("alpha",alpha)
-        self.task.set_worker(pg.multivariate_normality, *lparas, **paras)
+        self.paras.setdefault("alpha",alpha)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.multivariate_normality, **self.paras)

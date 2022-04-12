@@ -16,11 +16,10 @@ class Ui_RM_Anova_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("One-way and two-way repeated measures ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.rm_anova.html#pingouin.rm_anova"
-        self.log.info("rm_anova method!")
-
-        self.desc.setdefault("detail", "One-way and two-way repeated measures ANOVA")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "rm_anova method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(3)
         self.label_l1.setText("独立变量")
@@ -78,6 +77,7 @@ class Ui_RM_Anova_MainWindow(SubWindow_Pingouin):
             correction = True
         self.paras.setdefault("correction",correction)
         self.paras.setdefault("detailed", self.comboBox_p3.currentIndex() == 0)
+
         from PyQt5.QtCore import QDateTime
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.rm_anova, **self.paras)

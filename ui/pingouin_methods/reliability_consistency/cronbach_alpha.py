@@ -13,12 +13,14 @@ class Ui_Cronbach_alpha_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Cronbach’s alpha reliability measure")
         self.url = "https://pingouin-stats.org/generated/pingouin.cronbach_alpha.html#pingouin.cronbach_alpha"
-        self.log.info("cronbach_alpha method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "cronbach_alpha method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(3)
         self.label_l1.setText("items")
@@ -35,29 +37,28 @@ class Ui_Cronbach_alpha_MainWindow(SubWindow_Pingouin):
         self.lineEdit_s1.setText("0.95")
 
     def start_analyse(self):
-        lparas =()
-        paras = {}
-        paras.setdefault("data",self.df)
+        self.paras.clear()
+        self.paras.setdefault("data",self.df)
 
         items = self.listView_1.model().stringList()
         if len(items) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量items能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("items",items[0])
+        self.paras.setdefault("items",items[0])
 
         scores = self.listView_2.model().stringList()
         if len(scores) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量scores能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("scores", scores[0])
+        self.paras.setdefault("scores", scores[0])
 
         subject = self.listView_3.model().stringList()
         if len(subject) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量subject能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("subject", subject[0])
+        self.paras.setdefault("subject", subject[0])
 
-        paras.setdefault("nan_policy",self.comboBox_p1.currentText())
+        self.paras.setdefault("nan_policy",self.comboBox_p1.currentText())
 
         try:
             ci =float(self.lineEdit_s1.text())
@@ -70,5 +71,7 @@ class Ui_Cronbach_alpha_MainWindow(SubWindow_Pingouin):
                 ci = 0.95
         else:
             ci =0.95
-        paras.setdefault("ci",ci)
-        self.task.set_worker(pg.cronbach_alpha, *lparas, **paras)
+        self.paras.setdefault("ci",ci)
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.cronbach_alpha, **self.paras)

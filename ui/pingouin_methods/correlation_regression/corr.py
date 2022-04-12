@@ -14,13 +14,14 @@ class Ui_Corr_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("(Robust) correlation between two variables")
         self.url = "https://pingouin-stats.org/generated/pingouin.corr.html#pingouin.corr"
-        self.log.info("corr method!")
-
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "corr method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -46,6 +47,7 @@ class Ui_Corr_MainWindow(SubWindow_Pingouin):
         self.label_s1.setText("kwargs")
 
     def start_analyse(self):
+        self.paras.clear()
         xv = self.listView_1.model().stringList()
         if len(xv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
@@ -58,11 +60,10 @@ class Ui_Corr_MainWindow(SubWindow_Pingouin):
             return
         y = self.df[yv[0]]
 
-        lparas = (x,y)
-        paras = {}
-
-        paras.setdefault("alternative",self.comboBox_p1.currentText())
-        paras.setdefault("method", self.comboBox_p2.currentText())
+        self.paras.setdefault("x",x)
+        self.paras.setdefault("y",y)
+        self.paras.setdefault("alternative",self.comboBox_p1.currentText())
+        self.paras.setdefault("method", self.comboBox_p2.currentText())
 
         try:
             kws = eval(self.lineEdit_s1.text())
@@ -73,18 +74,8 @@ class Ui_Corr_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "kwargs需要被设置成dict类型的数值。当前kwargs已被设置成空dict，分析继续。", QMessageBox.Ok)
             kws = {}
         for key in kws:
-            paras.setdefault(key,kws[key])
-        self.task.set_worker(pg.corr, *lparas, **paras)
+            self.paras.setdefault(key,kws[key])
 
-# if __name__ =="__main__":
-#     import numpy as np
-#
-#     # Generate random correlated samples
-#     np.random.seed(123)
-#     mean, cov = [4, 6], [(1, .5), (.5, 1)]
-#     x, y = np.random.multivariate_normal(mean, cov, 30).T
-#     print(x[3])
-#     print(type(x))
-#     print("**********")
-#     print(y[5])
-#     print(type(y))
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.corr, **self.paras)

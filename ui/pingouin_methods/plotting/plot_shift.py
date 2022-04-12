@@ -15,16 +15,14 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Shift plot")
         self.url = "https://pingouin-stats.org/generated/pingouin.plot_shift.html#pingouin.plot_shift"
-        self.log.info("plot_shift method!")
-
-        self.desc.setdefault("detail", "Shift plot")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "plot_shift method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("x")
@@ -112,9 +110,17 @@ class Ui_Plot_shift_MainWindow(SubWindow_Pingouin):
         # y = np.random.normal(6, 1.5, 50)
         # self.paras.setdefault("x", x)
         # self.paras.setdefault("y", y)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
-        fig = pg.plot_shift(**self.paras)
+        self.desc["start_time"] = QDateTime.currentDateTime()
 
+        import traceback
+        try:
+            fig = pg.plot_shift(**self.paras)
+        except Exception as e:
+            self.log.error(e)
+            info = traceback.format_exc()
+            self.log.error(info)
+            QMessageBox.warning(None, "参数错误","程序运行出错！以下是错误信息，请检查！\n\t错误类型 : " + str(e) + "\n\t 错误堆栈 : " + info,QMessageBox.Ok)
+            return
         win = gl.get_value("Win_manager").get_sub_window("Window_Matplot")
         self.log.info("The Window_Matplot is " + str(win))
         win.reset_canvas(fig)

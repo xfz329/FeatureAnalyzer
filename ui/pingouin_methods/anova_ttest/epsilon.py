@@ -4,7 +4,6 @@
 #   created at 14:33 on 2022/4/6
 
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QDateTime
 
 import pingouin as pg
 from ui.pingouin_methods import SubWindow_Pingouin
@@ -18,11 +17,10 @@ class Ui_Epsilon_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("Epsilon adjustement factor for repeated measures")
         self.url = "https://pingouin-stats.org/generated/pingouin.epsilon.html#pingouin.epsilon"
-        self.log.info("epsilon method!")
-
-        self.desc.setdefault("detail", "Epsilon adjustement factor for repeated measures")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "epsilon method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(3)
         self.label_l1.setText("独立变量")
@@ -66,5 +64,7 @@ class Ui_Epsilon_MainWindow(SubWindow_Pingouin):
         else:
             correction ="lb"
         self.paras.setdefault("correction",correction)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.epsilon, **self.paras)

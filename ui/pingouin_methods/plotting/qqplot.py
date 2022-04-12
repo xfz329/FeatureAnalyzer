@@ -15,16 +15,14 @@ class Ui_Qqplot_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Quantile-Quantile plot")
         self.url = "https://pingouin-stats.org/generated/pingouin.qqplot.html#pingouin.qqplot"
-        self.log.info("qqplot method!")
-
-        self.desc.setdefault("detail", "Quantile-Quantile plot")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "qqplot method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(1)
         self.label_l1.setText("x")
@@ -67,8 +65,17 @@ class Ui_Qqplot_MainWindow(SubWindow_Pingouin):
         ax = win.get_canvas().figure.subplots()
         self.paras.setdefault("ax", ax)
 
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
-        pg.qqplot(**self.paras)
+        self.desc["start_time"] = QDateTime.currentDateTime()
+
+        import traceback
+        try:
+            pg.qqplot(**self.paras)
+        except Exception as e:
+            self.log.error(e)
+            info = traceback.format_exc()
+            self.log.error(info)
+            QMessageBox.warning(None, "参数错误","程序运行出错！以下是错误信息，请检查！\n\t错误类型 : " + str(e) + "\n\t 错误堆栈 : " + info,QMessageBox.Ok)
+            return
         win.get_canvas().draw()
         win.get_canvas().flush_events()
         name = "Fig_" + QDateTime.currentDateTime().toString("yyMMdd_HHmmss") + ".jpg"

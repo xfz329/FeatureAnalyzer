@@ -13,13 +13,14 @@ class Ui_Bayesfactor_binom_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Bayes factor of a binomial test with k successes, n trials and base probability p.")
         self.url = "https://pingouin-stats.org/generated/pingouin.bayesfactor_binom.html#pingouin.bayesfactor_binom"
-        self.log.info("bayesfactor_binom method!")
-
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "bayesfactor_binom method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setEnabled(False)
@@ -36,6 +37,7 @@ class Ui_Bayesfactor_binom_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
+        self.paras.clear()
         try:
             k = int(self.lineEdit_s1.text())
         except ValueError:
@@ -56,6 +58,10 @@ class Ui_Bayesfactor_binom_MainWindow(SubWindow_Pingouin):
         if p > 1 or p < 0:
             QMessageBox.warning(None, "参数设置错误", "p需要被设置成[0,1]区间内的float类型的数值。", QMessageBox.Ok)
             return
-        lparas = (k, n)
-        paras = {"p":p}
-        self.task.set_worker(pg.bayesfactor_binom, *lparas, **paras)
+        self.paras.setdefault("k",k)
+        self.paras.setdefault("n",n)
+        self.paras.setdefault("p",p)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.bayesfactor_binom,  **self.paras)

@@ -14,13 +14,14 @@ class Ui_Dichotomous_crosstab_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Generates a 2x2 contingency table from a pandas.DataFrame that contains only dichotomous entries, which are converted to 0 or 1")
         self.url = "https://pingouin-stats.org/generated/pingouin.dichotomous_crosstab.html#pingouin.dichotomous_crosstab"
-        self.log.info("dichotomous_crosstab method!")
-
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "dichotomous_crosstab method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setText("变量x")
@@ -31,6 +32,7 @@ class Ui_Dichotomous_crosstab_MainWindow(SubWindow_Pingouin):
         self.show_set_parameters(0)
 
     def start_analyse(self):
+        self.paras.clear()
         xv = self.listView_1.model().stringList()
         if len(xv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量x能且只能设置一个。", QMessageBox.Ok)
@@ -40,7 +42,10 @@ class Ui_Dichotomous_crosstab_MainWindow(SubWindow_Pingouin):
         if len(yv) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量y能且只能设置一个。", QMessageBox.Ok)
             return
-        lparas = (self.df,xv[0],yv[0])
-        paras = {}
+        self.paras.setdefault("data",self.df)
+        self.paras.setdefault("x",xv[0])
+        self.paras.setdefault("y",yv[0])
 
-        self.task.set_worker(pg.dichotomous_crosstab, *lparas, **paras)
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.dichotomous_crosstab, **self.paras)

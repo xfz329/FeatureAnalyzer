@@ -5,7 +5,6 @@
 import pingouin as pg
 
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QDateTime
 
 from ui.pingouin_methods import SubWindow_Pingouin
 
@@ -18,11 +17,10 @@ class Ui_Ancova_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("ANCOVA with one or more covariate(s)")
         self.url = "https://pingouin-stats.org/generated/pingouin.ancova.html#pingouin.ancova"
-        self.log.info("ancova method!")
-
-        self.desc.setdefault("detail", "ANCOVA with one or more covariate(s)")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "ancova method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(3)
         self.label_l1.setText("独立变量")
@@ -60,5 +58,7 @@ class Ui_Ancova_MainWindow(SubWindow_Pingouin):
         else:
             effsize ="n2"
         self.paras.setdefault("effsize",effsize)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.ancova, **self.paras)

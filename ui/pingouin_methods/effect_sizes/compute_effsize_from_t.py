@@ -13,12 +13,14 @@ class Ui_Compute_effsize_from_t_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Compute effect size from a T-value")
         self.url = "https://pingouin-stats.org/generated/pingouin.compute_effsize_from_t.html#pingouin.compute_effsize_from_t"
-        self.log.info("compute_effsize_from_t method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "compute_effsize_from_t method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(0)
 
@@ -44,16 +46,16 @@ class Ui_Compute_effsize_from_t_MainWindow(SubWindow_Pingouin):
 
 
     def start_analyse(self):
-        paras = {}
+        self.paras.clear()
 
-        paras.setdefault("eftype",self.comboBox_p1.currentText())
+        self.paras.setdefault("eftype",self.comboBox_p1.currentText())
 
         try:
             tval = float(self.lineEdit_s1.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "tval需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("tval",tval)
+        self.paras.setdefault("tval",tval)
 
         try:
             nx = eval(self.lineEdit_s2.text())
@@ -66,7 +68,7 @@ class Ui_Compute_effsize_from_t_MainWindow(SubWindow_Pingouin):
             except ValueError:
                 QMessageBox.warning(None, "参数设置错误", "nx需要被设置成int或None类型的数值。", QMessageBox.Ok)
                 return
-        paras.setdefault("nx",nx)
+        self.paras.setdefault("nx",nx)
 
         try:
             ny = eval(self.lineEdit_s3.text())
@@ -79,7 +81,7 @@ class Ui_Compute_effsize_from_t_MainWindow(SubWindow_Pingouin):
             except ValueError:
                 QMessageBox.warning(None, "参数设置错误", "ny需要被设置成int或None类型的数值。", QMessageBox.Ok)
                 return
-        paras.setdefault("ny",ny)
+        self.paras.setdefault("ny",ny)
 
         try:
             N = eval(self.lineEdit_s4.text())
@@ -92,7 +94,10 @@ class Ui_Compute_effsize_from_t_MainWindow(SubWindow_Pingouin):
             except ValueError:
                 QMessageBox.warning(None, "参数设置错误", "N需要被设置成int或None类型的数值。", QMessageBox.Ok)
                 return
-        paras.setdefault("N",N)
+        self.paras.setdefault("N",N)
 
-        paras.setdefault("tval",tval)
-        self.task.set_worker(pg.compute_effsize_from_t, **paras)
+        self.paras.setdefault("tval",tval)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.compute_effsize_from_t, **self.paras)

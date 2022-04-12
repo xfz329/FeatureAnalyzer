@@ -13,12 +13,14 @@ class Ui_Mad_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Median Absolute Deviation (MAD) along given axis of an array")
         self.url = "https://pingouin-stats.org/generated/pingouin.mad.html#pingouin.mad"
-        self.log.info("mad method!")
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "mad method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(1)
         self.label_l1.setText("a")
@@ -34,15 +36,15 @@ class Ui_Mad_MainWindow(SubWindow_Pingouin):
 
     def start_analyse(self):
         # TODO 2D-array
-        paras = {}
+        self.paras.clear()
 
         a = self.listView_1.model().stringList()
         if len(a) != 1:
             QMessageBox.warning(None, "参数设置错误", "变量dv能且只能设置一个。", QMessageBox.Ok)
             return
-        paras.setdefault("a",self.df[a[0]])
+        self.paras.setdefault("a",self.df[a[0]])
 
-        paras.setdefault("normalize", self.comboBox_p1.currentIndex()==0)
+        self.paras.setdefault("normalize", self.comboBox_p1.currentIndex()==0)
 
         try:
             axis = eval(self.lineEdit_s1.text())
@@ -56,5 +58,8 @@ class Ui_Mad_MainWindow(SubWindow_Pingouin):
                 except ValueError:
                     QMessageBox.warning(None, "参数设置错误", "axis需要被设置成整数或None，当前已重置为0。", QMessageBox.Ok)
                     axis = 0
-        paras.setdefault("axis", axis)
-        self.task.set_worker(pg.mad, **paras)
+        self.paras.setdefault("axis", axis)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.mad, **self.paras)

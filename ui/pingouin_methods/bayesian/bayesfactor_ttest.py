@@ -13,13 +13,14 @@ class Ui_Bayesfactor_ttest_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Bayes Factor of a T-test.")
         self.url = "https://pingouin-stats.org/generated/pingouin.bayesfactor_ttest.html#pingouin.bayesfactor_ttest"
-        self.log.info("bayesfactor_ttest method!")
-
+        self.desc.setdefault("detail", self.label_method.text())
+        self.desc.setdefault("brief", "bayesfactor_ttest method!")
+        self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(2)
         self.label_l1.setEnabled(False)
@@ -45,8 +46,8 @@ class Ui_Bayesfactor_ttest_MainWindow(SubWindow_Pingouin):
         self.lineEdit_s4.setText("0.707")
 
 
-
     def start_analyse(self):
+        self.paras.clear()
         try:
             t = float(self.lineEdit_s1.text())
         except ValueError:
@@ -59,8 +60,8 @@ class Ui_Bayesfactor_ttest_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "nx需要被设置成int类型的数值。", QMessageBox.Ok)
             return
 
-        lparas = (t, nx)
-        paras = {}
+        self.paras.setdefault("t",t)
+        self.paras.setdefault("nx",nx)
 
         try:
             ny = int(self.lineEdit_s3.text())
@@ -68,7 +69,7 @@ class Ui_Bayesfactor_ttest_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "ny需要被设置成int类型的数值。ny当前值已被设置成None，如需调整，请在设置后重新开始分析。", QMessageBox.Ok)
             ny = None
 
-        paras.setdefault("ny",ny)
+        self.paras.setdefault("ny",ny)
 
         if self.comboBox_p1.currentIndex() == 0:
             alternative = "two-sided"
@@ -76,13 +77,16 @@ class Ui_Bayesfactor_ttest_MainWindow(SubWindow_Pingouin):
             alternative = "greater"
         else:
             alternative ="less"
-        paras.setdefault("alternative",alternative)
-        paras.setdefault("paired",self.comboBox_p2.currentIndex() == 1)
+        self.paras.setdefault("alternative",alternative)
+        self.paras.setdefault("paired",self.comboBox_p2.currentIndex() == 1)
 
         try:
             r = float(self.lineEdit_s4.text())
         except ValueError:
             QMessageBox.warning(None, "参数设置错误", "r需要被设置成float类型的数值。", QMessageBox.Ok)
             return
-        paras.setdefault("r", r)
-        self.task.set_worker(pg.bayesfactor_ttest, *lparas, **paras)
+        self.paras.setdefault("r", r)
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
+        self.task.set_worker(pg.bayesfactor_ttest, **self.paras)

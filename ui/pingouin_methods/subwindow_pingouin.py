@@ -74,7 +74,7 @@ class SubWindow_Pingouin(SubWindow_Pingouin_basic):
         QDesktopServices.openUrl(QUrl(self.url))
 
     def info_analyse_finished(self):
-        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime()
         ans = self.task.get_ans()
         self.log.info("get the answer calculated in the thread")
         if type(ans) is dict and  isinstance(ans["error"], Exception):
@@ -92,7 +92,7 @@ class SubWindow_Pingouin(SubWindow_Pingouin_basic):
         self.log.info("finished updating")
 
     def info_draw_finished(self):
-        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+        self.desc["finish_time"] = QtCore.QDateTime.currentDateTime()
         win = gl.get_value("Win_manager").get_sub_window("Window_Result")
         output = gl.get_value("output")
         output.add(self.desc,self.paras)

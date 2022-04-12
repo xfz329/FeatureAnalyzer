@@ -15,16 +15,14 @@ class Ui_Plot_rm_corr_MainWindow(SubWindow_Pingouin):
     def __init__(self):
         SubWindow_Pingouin.__init__(self)
         self.set_widgets()
-        self.set_widgets()
 
     def set_widgets(self):
         self.label_method.setText("Plot a repeated measures correlation")
         self.url = "https://pingouin-stats.org/generated/pingouin.plot_paired.html#pingouin.plot_paired"
-        self.log.info("plot_rm_corr method!")
-
-        self.desc.setdefault("detail", "Plot a repeated measures correlation")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "plot_rm_corr method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(3)
         self.label_l1.setText("x")
@@ -71,8 +69,17 @@ class Ui_Plot_rm_corr_MainWindow(SubWindow_Pingouin):
             QMessageBox.warning(None, "参数设置错误", "kwargs_facetgrid需要被设置成dict类型的数值。", QMessageBox.Ok)
             return
         self.paras.setdefault("kwargs_facetgrid", kwargs_facetgrid)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
-        g = pg.plot_rm_corr(**self.paras)
+        self.desc["start_time"] = QDateTime.currentDateTime()
+
+        import traceback
+        try:
+            g = pg.plot_rm_corr(**self.paras)
+        except Exception as e:
+            self.log.error(e)
+            info = traceback.format_exc()
+            self.log.error(info)
+            QMessageBox.warning(None, "参数错误","程序运行出错！以下是错误信息，请检查！\n\t错误类型 : " + str(e) + "\n\t 错误堆栈 : " + info,QMessageBox.Ok)
+            return
         win = gl.get_value("Win_manager").get_sub_window("Window_Matplot")
         self.log.info("The Window_Matplot is " + str(win))
         win.reset_canvas(g.fig)

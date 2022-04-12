@@ -18,11 +18,10 @@ class Ui_Mixed_Anova_MainWindow(SubWindow_Pingouin):
     def set_widgets(self):
         self.label_method.setText("Mixed-design (split-plot) ANOVA")
         self.url = "https://pingouin-stats.org/generated/pingouin.mixed_anova.html#pingouin.mixed_anova"
-        self.log.info("mixed_anova method!")
-
-        self.desc.setdefault("detail", "Mixed-design (split-plot) ANOVA")
+        self.desc.setdefault("detail", self.label_method.text())
         self.desc.setdefault("brief", "mixed_anova method!")
         self.desc.setdefault("url", self.url)
+        self.log.info(self.desc["brief"])
 
         self.show_add_parameter(4)
         self.label_l1.setText("独立变量")
@@ -79,5 +78,7 @@ class Ui_Mixed_Anova_MainWindow(SubWindow_Pingouin):
         else:
             correction = True
         self.paras.setdefault("correction",correction)
-        self.desc["start_time"] = QDateTime.currentDateTime().toString("HH:mm:ss.zzz")
+
+        from PyQt5.QtCore import QDateTime
+        self.desc["start_time"] = QDateTime.currentDateTime()
         self.task.set_worker(pg.mixed_anova, **self.paras)
