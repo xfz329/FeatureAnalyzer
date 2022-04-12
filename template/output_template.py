@@ -58,7 +58,7 @@ result = \
 fig = \
 """
     <dd class = normal>图片已存储为 %(path)s </dd>
-    <dd class = normal><img src = %(path)s></dd>
+    <dd class = normal><img src = "%(path)s" alt = %(path)s width = 600 height = 450></dd>
 """
 import pandas as pd
 import numpy

@@ -50,12 +50,13 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File /r "D:\UrgeData\Documents\Codes\Graduate\FeatureAnalyzer\dist\main\*.*"
-  WriteUninstaller "$INSTDIR\Uninstall.exe"     ;---- 这里是生成卸载程序
-  CreateShortCut "$DESKTOP.lnk" "$INSTDIR\main.exe"
+  WriteUninstaller "$INSTDIR\uninst.exe"     ;---- 这里是生成卸载程序
+  CreateShortCut "$DESKTOP\FeatureAnalyzer.lnk" "$INSTDIR\main.exe"
 SectionEnd
 
 Section -AdditionalIcons
   CreateDirectory "$SMPROGRAMS\FeatureAnalyzer"
+  CreateShortCut "$SMPROGRAMS\FeatureAnalyzer\FeatureAnalyzer.lnk" "$INSTDIR\main.exe"
   CreateShortCut "$SMPROGRAMS\FeatureAnalyzer\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
@@ -75,8 +76,9 @@ SectionEnd
 Section Uninstall
   Delete "$INSTDIR\uninst.exe"
 
+  Delete "$SMPROGRAMS\FeatureAnalyzer\FeatureAnalyzer.lnk"
   Delete "$SMPROGRAMS\FeatureAnalyzer\Uninstall.lnk"
-  Delete "$DESKTOP.lnk"
+  Delete "$DESKTOP\FeatureAnalyzer.lnk"
 
   RMDir "$SMPROGRAMS\FeatureAnalyzer"
   RMDir ""
@@ -102,8 +104,9 @@ Section Uninstall
   RMDir /r "$INSTDIR\kiwisolver"
   RMDir /r "$INSTDIR\future"
   RMDir /r "$INSTDIR\certifi"
+  RMDir /r "$INSTDIR\tornado"
   RMDir /r "$INSTDIR\altgraph-0.17.2.dist-info"
-
+  Delete   "$INSTDIR\*.*"
   RMDir "$INSTDIR"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
