@@ -61,13 +61,15 @@ class Ui_Pairwise_corr_MainWindow(SubWindow_Pingouin):
         self.paras.clear()
         self.paras.setdefault("data",self.df)
         covar = self.listView_1.model().stringList()
+        if len(covar) == 0:
+            covar = None
         self.paras.setdefault("covar",covar)
 
         self.paras.setdefault("alternative",self.comboBox_p1.currentText())
 
         num = self.comboBox_p2.currentIndex()
-        if num > 1:
-            QMessageBox.warning(None, "参数设置错误", "该方法还不被Pingouin（0.5.1）支持，请参阅官方文档。",QMessageBox.Ok)
+        if covar is not None and num > 1:
+            QMessageBox.warning(None, "参数设置错误", "covar 不为None时，仅支持pearson与spearman方法。",QMessageBox.Ok)
             return
         self.paras.setdefault("method", self.comboBox_p2.currentText())
         self.paras.setdefault("padjust", self.comboBox_p3.currentText())
